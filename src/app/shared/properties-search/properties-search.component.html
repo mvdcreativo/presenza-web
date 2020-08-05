@@ -1,0 +1,345 @@
+<form *ngIf="featurePrimary" [formGroup]="form" class="search-wrapper" [ngClass]="'variant-'+variant">
+    <h2 fxLayoutAlign="start center"><i class="material-icons-round p-2">tune</i> Filtros</h2>
+    <div [fxLayout]="(vertical) ? 'column' : 'row wrap'">
+        
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+            <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                <mat-label>Tipo de Propiedad</mat-label>
+                <mat-select placeholder="Tipo de Propiedead" formControlName="propertyType">
+                    <mat-option *ngFor="let propertyType of propertyTypes | async" [value]="propertyType">
+                        {{propertyType.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+            <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                <mat-label>Tipo de Operación</mat-label>
+                <mat-select placeholder="Tipo de Operación" formControlName="propertyStatus" multiple>
+                    <mat-option *ngFor="let propertyStatus of propertyStatuses | async" [value]="propertyStatus">
+                        {{propertyStatus.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2" formGroupName="price">
+
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxFlex="45">
+                    <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                        <mat-label>{{(variant == 1) ? 'Precio' : 'Precio Desde'}}</mat-label>
+                        <input matInput autocomplete="off" placeholder="Precio Desde" formControlName="from" type="text"
+                            onlyNumber>
+                    </mat-form-field>
+                </div>
+                <div fxFlex="10" class="text-center" [class.pt-2]="variant == 2">
+                    <mat-icon class="text-muted">remove</mat-icon>
+                </div>
+                <div fxFlex="45">
+                    <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                        <mat-label>{{(variant == 1) ? '' : 'Precio Hasta'}}</mat-label>
+                        <input matInput autocomplete="off" placeholder="Precio Hasta" formControlName="to" type="text"
+                            onlyNumber>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div *ngIf="showMore" [fxLayout]="(vertical) ? 'column' : 'row wrap'" class="w-100">
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+                <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                    <mat-label>Provincia</mat-label>
+                    <mat-select placeholder="Seleccione Provincia..." formControlName="state"
+                        (selectionChange)="onSelectState()">
+                        <mat-option *ngFor="let state of states | async" [value]="state">
+                            {{state.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+                <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                    <mat-label>Ciudad</mat-label>
+                    <mat-select placeholder="Seleccione Ciudad..." formControlName="city"
+                        (selectionChange)="onSelectCity()">
+                        <mat-option *ngFor="let city of cities | async | filterCity: form.get('state').value?.id"
+                            [value]="city">
+                            {{city.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+                <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                    <mat-label>Municipalidad</mat-label>
+                    <mat-select placeholder="Seleccione Municipalidad..." formControlName="municipality"
+                        (selectionChange)="onSelectMunicipality()">
+                        <mat-option
+                            *ngFor="let municipality of municipalities | async | filterMunicipality: form.get('city').value?.id"
+                            [value]="municipality">
+                            {{municipality.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+                <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput placeholder="exp. 98104" autocomplete="off" formControlName="zipCode">                  
+                </mat-form-field>
+            </div> -->
+
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+                <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                    <mat-label>Barrio</mat-label>
+                    <mat-select placeholder="Selecciona Barrio..." formControlName="neighborhood" multiple
+                        (selectionChange)="onSelectNeighborhood()">
+                        <mat-option
+                            *ngFor="let neighborhood of neighborhoods | async | filterNeighborhoods: form.get('municipality').value?.id"
+                            [value]="neighborhood">
+                            {{neighborhood.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">                         
+                <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                    <mat-label>Street</mat-label>
+                    <mat-select placeholder="Select Street..." formControlName="street" multiple>
+                        <mat-option *ngFor="let street of streets | filterStreets : { neighborhoods:form.get('neighborhood').value, cityId:form.get('city').value?.id } " [value]="street">
+                            {{street.name}}
+                        </mat-option>
+                    </mat-select> 
+                </mat-form-field>
+            </div> -->
+
+            <!-- <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2" formGroupName="bedrooms">
+    
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? 'Bedrooms' : 'Bedrooms From'}}</mat-label>
+                            <mat-select placeholder="From" formControlName="from">
+                                <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]" [value]="number">
+                                    {{number}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="10" class="text-center" [class.pt-2]="variant == 2">
+                        <mat-icon class="text-muted">remove</mat-icon>
+                    </div>
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? '' : 'Bedrooms To'}}</mat-label>
+                            <mat-select placeholder="To" formControlName="to">
+                                <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]" [value]="number">
+                                    {{number}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div> 
+    
+            </div>  -->
+
+            <!-- <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2" formGroupName="bathrooms">
+    
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? 'Bathrooms' : 'Bathrooms From'}}</mat-label>
+                            <mat-select placeholder="From" formControlName="from">
+                                <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]" [value]="number">
+                                    {{number}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="10" class="text-center" [class.pt-2]="variant == 2">
+                        <mat-icon class="text-muted">remove</mat-icon>
+                    </div>
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? '' : 'Bathrooms To'}}</mat-label>
+                            <mat-select placeholder="To" formControlName="to">
+                                <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]" [value]="number">
+                                    {{number}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div> 
+    
+            </div> 
+
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2" formGroupName="garages">
+    
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? 'Garages' : 'Garages From'}}</mat-label>
+                            <mat-select placeholder="From" formControlName="from">
+                                <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]" [value]="number">
+                                    {{number}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="10" class="text-center" [class.pt-2]="variant == 2">
+                        <mat-icon class="text-muted">remove</mat-icon>
+                    </div>
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? '' : 'Garages To'}}</mat-label>
+                            <mat-select placeholder="To" formControlName="to">
+                                <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]" [value]="number">
+                                    {{number}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div> 
+    
+            </div>  -->
+
+            <!-- <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2" formGroupName="area">
+
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? 'Area' : 'Area From'}}</mat-label>
+                            <input matInput autocomplete="off" placeholder="From" formControlName="from" type="text" onlyNumber>                  
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="10" class="text-center" [class.pt-2]="variant == 2">
+                        <mat-icon class="text-muted">remove</mat-icon>
+                    </div>
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? '' : 'Area To'}}</mat-label>
+                            <input matInput autocomplete="off" placeholder="To" formControlName="to" type="text" onlyNumber>                  
+                        </mat-form-field>
+                    </div>
+                </div> 
+    
+            </div> -->
+
+            <!-- <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2" formGroupName="yearBuilt">
+
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? 'Year Built' : 'Fear Built From'}}</mat-label>
+                            <input matInput autocomplete="off" placeholder="From" formControlName="from" type="text" onlyNumber maxlength="4">                  
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="10" class="text-center" [class.pt-2]="variant == 2">
+                        <mat-icon class="text-muted">remove</mat-icon>
+                    </div>
+                    <div fxFlex="45">
+                        <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>{{(variant == 1) ? '' : 'Year Built To'}}</mat-label>
+                            <input matInput autocomplete="off" placeholder="To" formControlName="to" type="text" onlyNumber maxlength="4">                  
+                        </mat-form-field>
+                    </div>
+                </div> 
+    
+            </div> -->
+
+            <!-- <div fxFlex="100" class="mb-2"> 
+                <p class="uppercase m-2 fw-500">Caracteristicas</p> 
+                <div formArrayName="features" [fxLayout]="(vertical) ? 'column' : 'row wrap'">
+                    <div [formGroupName]="i" *ngFor="let control of form['controls'].features['controls']; index as i" class="p-2">
+                        <mat-checkbox formControlName="selected">{{features[i].name}}</mat-checkbox>                         
+                    </div>
+                </div>
+            </div> -->
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-2">
+                <p class="uppercase m-2 fw-500">Caracteristicas</p>
+                <span *ngFor="let featurePri of featurePrimary; let ip = index">
+                    <h3>{{featurePrimary[ip].name}}</h3>
+
+                    <span class="item-feature" *ngFor="let fea of featurePri.features; let i = index">
+
+                        <div *ngIf="featurePrimary[ip].features[i].type === 'OPC'" class="p-2">
+                            <mat-checkbox [formControlName]="featurePrimary[ip].features[i].slug">
+                                {{ featurePrimary[ip].features[i].name }}</mat-checkbox>
+                        </div>
+
+                        <mat-form-field *ngIf="featurePrimary[ip].features[i].type === 'VAL'"
+                            [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>
+                                {{(variant == 1) ? featurePrimary[ip].features[i].name: featurePrimary[ip].features[i].name}}
+                            </mat-label>
+                            <mat-select placeholder="{{ featurePrimary[ip].features[i].name }}"
+                                [formControlName]="featurePrimary[ip].features[i].slug">
+                                <mat-option>No especificar</mat-option>
+                                <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]" [value]="number">
+                                    {{ number }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field *ngIf="featurePrimary[ip].features[i].type === 'VAL100'"
+                            [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>
+                                {{(variant == 1) ? featurePrimary[ip].features[i].name: featurePrimary[ip].features[i].name}}
+                            </mat-label>
+                            <mat-select placeholder="{{ featurePrimary[ip].features[i].name }}"
+                                [formControlName]="featurePrimary[ip].features[i].slug">
+                                <mat-option>No especificar</mat-option>
+                                <mat-option *ngFor="let item of val100" [value]="item.value">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+
+                        <mat-form-field *ngIf="featurePrimary[ip].features[i].type === 'VALSTR'"
+                            [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>
+                                {{(variant == 1) ? featurePrimary[ip].features[i].name: featurePrimary[ip].features[i].name}}
+                            </mat-label>
+                            <mat-select placeholder="{{ featurePrimary[ip].features[i].name }}"
+                                [formControlName]="featurePrimary[ip].features[i].slug">
+                                <mat-option>No especificar</mat-option>
+                                <mat-option *ngFor="let item of propertyStatus" [value]="item.value">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+
+                    </span>
+
+
+
+                </span>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="p-2">
+        <button mat-raised-button color="warn" class="uppercase mx-1" (click)="reset()">Borrar</button>
+        <button *ngIf="!vertical" mat-raised-button color="primary" class="uppercase mx-1"
+            (click)="showMore = !showMore">{{(showMore) ? 'Ocultar' : 'Busqueda Avanzada'}}</button>
+        <button *ngIf="searchOnBtnClick" mat-raised-button color="primary" class="search-btn mx-1" (click)="search()">
+            <mat-icon>search</mat-icon> Buscar
+        </button>
+    </div>
+
+
+</form>

@@ -1,0 +1,104 @@
+<app-header-image [backgroundImage]="'assets/images/others/contact.jpg'" 
+                  [bgImageAnimate]="true" 
+                  [contentOffsetToTop]="true"                
+                  [title]="'Contactanos'"
+                  [desc]="'Estamos a su disposición'">
+</app-header-image>
+
+<div class="px-3">
+
+    <div class="theme-container">
+        <mat-card class="main-content-header mb-5">
+            
+            <div fxLayout="row wrap" fxLayoutAlign="space-around">
+                <div fxFlex="100" fxFlex.gt-xs="33.3">
+                    <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
+                        <mat-icon color="primary" class="mat-icon-lg">home</mat-icon>
+                        <h3 class="primary-color py-1">Ubicación :</h3>
+                        <span>Mar del Tuyú<br>
+                            Calle 2 esq. 77 nº 7710 Buenos Aires, Argentina.<br>
+                        </span>
+                        <span>
+                        --------
+                        </span>
+                        <span>Mar del Tuyú<br>
+                            calle 53 N° 299 Buenos Aires, Argentina.<br>
+                        </span>
+                    </div>
+                </div>
+                <div fxFlex="100" fxFlex.gt-xs="33.3" ngClass.xs="mt-2">
+                    <div fxLayout="column" fxLayoutAlign="center center"  class="text-center">
+                        <mat-icon color="primary" class="mat-icon-lg">call</mat-icon>
+                        <h3 class="primary-color py-1">Vía telefónica :</h3>
+                        <span>Mar del Tuyú<br>
+                            (02246) 43-4284 || 43-4295<br>
+                            wsp. 2246519913 <br>
+                        </span>
+                        <span>
+                        --------
+                        </span>
+                        <span>Mar del Tuyú<br>
+                            (02246) 520-371 || 43-4295 <br>
+                            wsp. 2246407762 <br>
+                        </span>
+                    </div>
+                </div>
+                <div fxFlex="100" fxFlex.gt-xs="33.3" ngClass.xs="mt-2">
+                    <div fxLayout="column" fxLayoutAlign="center center"  class="text-center">
+                        <mat-icon color="primary" class="mat-icon-lg">mail_outline</mat-icon>
+                        <h3 class="primary-color py-1">Corréo electrónico :</h3>
+                        <span>
+                            presenzaprop@gmail.com<br>
+                        </span>
+                    </div>
+                </div>
+                <div class="divider w-100 mt-3"></div>
+                <h3 class="w-100 text-center py-3">Envíanos un Mensaje</h3>
+                
+                <form [formGroup]="contactForm" (ngSubmit)="onContactFormSubmit(contactForm.value)" fxLayout="row wrap">
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput placeholder="Nombre" formControlName="name" required>
+                            <mat-error *ngIf="contactForm.controls.name.errors?.required">Nombre es requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="Email" formControlName="email" required>
+                            <mat-error *ngIf="contactForm.controls.email.errors?.required">Email es requerido</mat-error>
+                            <mat-error *ngIf="contactForm.controls.email.hasError('invalidEmail')">Dirección de email inválida</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Teléfono</mat-label>
+                            <input matInput placeholder="Teléfono" formControlName="phone" required>
+                            <mat-error *ngIf="contactForm.controls.phone.errors?.required">Teléfono es requerido</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" class="px-1 mt-1">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Mensage</mat-label> 
+                            <textarea matInput placeholder="Mensage" formControlName="message" required rows="7"></textarea> 
+                            <mat-error *ngIf="contactForm.controls.message.errors?.required">Mensaje es requerido</mat-error>
+                        </mat-form-field>
+                    </div> 
+                    <div class="w-100 py-2 text-center">
+                        <button mat-raised-button color="primary" type="submit" class="uppercase">Enviar</button>
+                    </div> 
+                </form> 
+            
+            </div> 
+            
+            <div class="mt-5 contact-map">
+                <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeControl]="true" [fullscreenControl]="true">
+                    <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="false" ></agm-marker>
+                </agm-map>
+            </div>
+
+        </mat-card>  
+    </div>
+
+</div>
