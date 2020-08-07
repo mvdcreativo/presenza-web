@@ -96,8 +96,8 @@
 
             <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
                 <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
-                    <mat-label>Barrio</mat-label>
-                    <mat-select placeholder="Selecciona Barrio..." formControlName="neighborhood" multiple
+                    <mat-label>Localidad/Barrio</mat-label>
+                    <mat-select placeholder="Selecciona Localidad/Barrio..." formControlName="neighborhood" multiple
                         (selectionChange)="onSelectNeighborhood()">
                         <mat-option
                             *ngFor="let neighborhood of neighborhoods | async | filterNeighborhoods: form.get('municipality').value?.id"
