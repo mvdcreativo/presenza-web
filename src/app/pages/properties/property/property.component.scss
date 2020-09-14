@@ -13,6 +13,8 @@
         width: 100%;
         height: auto;
         max-width: 100%;
+        object-fit: cover;
+        object-position: center;
     } 
     .control-icons{ 
         position: absolute;
@@ -36,11 +38,17 @@
         }
     }
 }
-.small-carousel{ 
+.small-carousel{
     .swiper-slide{  
+        max-height: 100px!important;
+
         img{
+            position: relative;
             display: block;
-            opacity: 0.3;
+            opacity: 0.5;
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
         }
         &.active-thumb{
             img{ 

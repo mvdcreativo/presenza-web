@@ -80,7 +80,9 @@ export class HomeComponent implements OnInit {
 
   public getProperties(){  
     //console.log('get properties by : ', this.searchFields);  
-    this.appService.getProperties().subscribe(data => {     
+    this.appService.getProperties().subscribe(data => {  
+      console.log(data);
+         
       this.getFeaturedProperties(data); 
       if(this.properties && this.properties.length > 0){  
         this.settings.loadMore.page++;

@@ -8,7 +8,8 @@ import { LockScreenComponent } from './pages/lock-screen/lock-screen.component';
 export const routes: Routes = [
     { 
         path: '', 
-        component: PagesComponent, children: [
+        component: PagesComponent, 
+        children: [
             //{ path: '', redirectTo: '/landing', pathMatch: 'full' },
             { path: '', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
             { path: 'about', loadChildren: () => import('./pages/about/about.module').then(m => m.AboutModule) },

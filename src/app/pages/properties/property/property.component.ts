@@ -183,7 +183,7 @@ export class PropertyComponent implements OnInit {
 
     this.config2 = {
       observer: false,
-      slidesPerView: 4,
+      slidesPerView: 10,
       spaceBetween: 16,
       keyboard: true,
       navigation: false,
@@ -194,10 +194,10 @@ export class PropertyComponent implements OnInit {
       lazy: true,
       breakpoints: {
         480: {
-          slidesPerView: 2
+          slidesPerView: 4
         },
         600: {
-          slidesPerView: 3,
+          slidesPerView: 6,
         }
       }
     }

@@ -37,9 +37,11 @@ export class PropertyItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    this.property = this.publication?.property;
-    this.filterFeatureImportant()
+    if(this.publication){
+
+      this.property = this.publication?.property;
+      this.filterFeatureImportant()
+    }
    }
 
   ngAfterViewInit(){
@@ -146,7 +148,7 @@ export class PropertyItemComponent implements OnInit {
   }
 
   filterFeatureImportant(){
-    this.featuresImportants = this.property.features.filter(f => f.id === 5 || f.id === 7 || f.id === 11 || f.id === 5 || f.id === 16 || f.id === 17 )
+    this.featuresImportants = this.property?.features.filter(f => f.id === 5 || f.id === 7 || f.id === 11 || f.id === 5 || f.id === 16 || f.id === 17 )
 
   }
 

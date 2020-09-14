@@ -1,4 +1,4 @@
-<mat-card class="property-item p-0 mat-elevation-z3 " [ngClass]="[viewType + '-item', 'column-'+column]" [class.full-width-page]="fullWidthPage" fxLayout="row wrap">  
+<mat-card *ngIf="property" class="property-item p-0 mat-elevation-z3 " [ngClass]="[viewType + '-item', 'column-'+column]" [class.full-width-page]="fullWidthPage" fxLayout="row wrap">  
   
     <div fxFlex="100" fxShrink="3" [fxFlex.gt-sm]="(viewType=='list') ? 40 : 100" [fxFlex.sm]="(viewType=='list') ? 50 : 100" class="thumbnail-section">
 
@@ -13,7 +13,7 @@
             <div class="swiper-container" [swiper]="config">
                 <div class="swiper-wrapper">
                     <div *ngFor="let image of property.images" class="swiper-slide">
-                        <img [attr.data-src]="image.url" class="swiper-lazy">
+                        <img [attr.data-src]="image.url_medium" class="swiper-lazy">
                         <div class="swiper-lazy-preloader"></div>
                     </div> 
                 </div>  

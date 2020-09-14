@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Property, Location, Publication, PropertyTypes, TransactionTypes, State, City, Municipality, Neighborhood, Feature } from './app.models';
+import { Property, Response, Location, Publication, PropertyTypes, TransactionTypes, State, City, Municipality, Neighborhood, Feature, ResponsePaginate } from './app.models';
 import { AppSettings } from './app.settings';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from 'src/environments/environment';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 
 export class Data {
   constructor(public properties: Property[],
@@ -44,19 +44,19 @@ export class AppService {
 
 
   public getProperties(): Observable<Publication[]> {
-    return this.http.get<Publication[]>(this.url + 'publications');
+    return this.http.get<ResponsePaginate>(this.url + 'publications').pipe(map(v=> v.data.data))
   }
 
   public getPropertyById(id): Observable<Publication> {
-    return this.http.get<Publication>(`${this.url}publications/${id}`);
+    return this.http.get<Response>(`${this.url}publications/${id}`).pipe(map(v=> v.data));
   }
 
   public getFeaturedProperties(): Observable<Publication[]> {
-    return this.http.get<Publication[]>(`${this.url}publications`);
+    return this.http.get<ResponsePaginate>(`${this.url}publications`).pipe(map(v=> v.data.data));
   }
 
   public getRelatedProperties(): Observable<Publication[]> {
-    return this.http.get<Publication[]>(`${this.url}publications`);
+    return this.http.get<Response>(`${this.url}publications`).pipe(map(v=> v.data.data));
   }
 
   public getPropertiesByAgentId(agentId): Observable<Publication[]> {
@@ -107,8 +107,8 @@ export class AppService {
     }
   }
 
-  public getPropertyTypes(): Observable<any[]> {
-    return this.http.get<PropertyTypes[]>(this.url + 'property_types');
+  public getPropertyTypes(): Observable<PropertyTypes[]> {
+    return this.http.get<ResponsePaginate>(this.url + 'property_types').pipe(map(v=> v.data.data));
     // return [ 
     //   { id: 1, name: 'Office' },
     //   { id: 2, name: 'House' },
@@ -116,24 +116,24 @@ export class AppService {
     // ]
   }
 
-  public getPropertyStatuses(): Observable<any[]> {
-    return this.http.get<TransactionTypes[]>(this.url + 'transaction_types');
+  public getPropertyStatuses(): Observable<TransactionTypes[]> {
+    return this.http.get<ResponsePaginate>(this.url + 'transaction_types').pipe(map(v=> v.data.data));
 
   }
 
-  public getStates(): Observable<any[]> {
-    return this.http.get<State[]>(this.url + 'provinces');
+  public getStates(): Observable<State[]> {
+    return this.http.get<ResponsePaginate>(this.url + 'provinces').pipe(map(v=> v.data.data));
   }
 
-  public getCities(): Observable<any[]> {
-    return this.http.get<City[]>(this.url + 'cities');
+  public getCities(): Observable<City[]> {
+    return this.http.get<ResponsePaginate>(this.url + 'cities').pipe(map(v=> v.data.data));
   }
-  public getMunicipality(): Observable<any[]> {
-    return this.http.get<Municipality[]>(this.url + 'municipalities');
+  public getMunicipality(): Observable<Municipality[]> {
+    return this.http.get<ResponsePaginate>(this.url + 'municipalities').pipe(map(v=> v.data.data));
   }
 
-  public getNeighborhoods(): Observable<any[]> {
-    return this.http.get<Neighborhood[]>(this.url + 'neighborhoods');
+  public getNeighborhoods(): Observable<Neighborhood[]> {
+    return this.http.get<ResponsePaginate>(this.url + 'neighborhoods').pipe(map(v=> v.data.data));
   }
 
 
@@ -166,8 +166,8 @@ export class AppService {
     ]
   }
 
-  public getFeatures(): Observable<any[]> {
-    return this.http.get<Feature[]>(this.url + 'features').pipe(take(1));
+  public getFeatures(): Observable<Feature[]> {
+    return this.http.get<Response>(this.url + 'features_all').pipe(take(1)).pipe(map(v=> v.data));
   }
 
 

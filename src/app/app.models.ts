@@ -12,6 +12,33 @@ export interface Publication {
     
 }
 
+export interface ResponsePaginate {
+    message?: string;
+    data?: Paginate;
+    success?: boolean;
+}
+
+export interface Response {
+    message?: string;
+    data?: any;
+    success?: boolean;
+}
+
+export interface Paginate {
+    current_page: number;
+    data: any[];
+    first_page_url: string;
+    from?: any;
+    last_page: number;
+    last_page_url: string;
+    next_page_url?: any;
+    path: string;
+    per_page: number;
+    prev_page_url?: any;
+    to?: any;
+    total: number;
+}
+
 export interface Property {
     id?: number;
     title?: string;
@@ -25,7 +52,7 @@ export interface Property {
     longitude?: string;
     user_owner_id?: number;
     user_customer_id?: number;
-    images?: any[];
+    images?: Image[];
     created_at?: string;
     updated_at?: string;
     deleted_at?: string;
@@ -65,6 +92,16 @@ export interface Property {
     // views: number;
 }
 
+export interface Image {
+    id?: number;
+    url: string;
+    url_small: string;
+    url_medium: string;
+    title?: string;
+    subtitle?: string;
+    description?: string;
+
+}
 export interface PropertyTypes {
     id?:number;
     name:string;

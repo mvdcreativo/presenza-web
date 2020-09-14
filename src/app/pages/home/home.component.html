@@ -81,9 +81,9 @@
 
 <!-- <app-testimonials></app-testimonials>  -->
 
-<app-hot-offer-today [propertyId]="3"></app-hot-offer-today> 
+<app-hot-offer-today  *ngIf="properties" [propertyId]="3"></app-hot-offer-today> 
 
-<app-featured-properties [properties]="featuredProperties"></app-featured-properties>
+<app-featured-properties  *ngIf="properties" [properties]="featuredProperties"></app-featured-properties>
 
 <!-- <app-our-agents></app-our-agents> -->
       

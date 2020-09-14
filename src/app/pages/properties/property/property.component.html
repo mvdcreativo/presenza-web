@@ -178,7 +178,7 @@
                             <div class="swiper-wrapper">
                                 <div *ngFor="let image of property?.images; let i=index;" class="swiper-slide"
                                     [ngClass]="'thumb-'+i" [class.active-thumb]="i == 0">
-                                    <img [attr.data-src]="image.url" class="swiper-lazy mw-100"
+                                    <img [attr.data-src]="image.url_small" class="swiper-lazy mw-100"
                                         (click)="selectImage(i)">
                                     <div class="swiper-lazy-preloader"></div>
                                 </div>

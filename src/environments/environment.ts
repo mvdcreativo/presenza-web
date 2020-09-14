@@ -8,6 +8,10 @@ export const environment = {
   storageAPI:"http://presenza_api_v1.test/storage/",
   API_KEY_GM : "AIzaSyDYkJQ4CJrY3YrvR-1fcn36K4-iuyZsiGI",
   urlAssets : "assets/"
+  // API:"http://api.presenza.picaworks.com/api/",
+  // storageAPI:"http://api.presenza.picaworks.com/storage/",
+  // API_KEY_GM : "AIzaSyDYkJQ4CJrY3YrvR-1fcn36K4-iuyZsiGI",
+  // urlAssets : "assets/"
 
 };
 

@@ -150,6 +150,7 @@ import { LogoComponent } from './logo/logo.component';
     MatToolbarModule,
     MatTooltipModule,
     MatStepperModule,
+    
     PerfectScrollbarModule,
     PipesModule,
     DirectivesModule, 
