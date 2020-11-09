@@ -1,0 +1,35 @@
+<div class="main-carousel mb-3">
+    <div class="control-icons">
+        <!-- <button mat-button [disabled]="onFavorites()" (click)="addToFavorites()" matTooltip="Enviar a Favoritos">
+            <mat-icon class="">favorite_border</mat-icon>
+        </button> -->
+        <button mat-button [disabled]="onCompare()" (click)="addToCompare()" matTooltip="Marcar para Comparar">
+            <mat-icon class="">compare_arrows</mat-icon>
+        </button>
+    </div>
+    <div id="main-carousel" class="swiper-container" [swiper]="config" (indexChange)="onIndexChange($event)">
+        <div class="swiper-wrapper">
+            <div *ngFor="let image of images" class="swiper-slide">
+                <img [attr.data-src]="image.url" class="swiper-lazy">
+                <div class="swiper-lazy-preloader"></div>
+            </div>
+        </div>
+        <button mat-mini-fab color="primary" class="swiper-button-prev swipe-arrow">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" class="swiper-button-next swipe-arrow">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+    </div>
+</div>
+<div class="small-carousel">
+    <div id="small-carousel" class="swiper-container" [swiper]="config2">
+        <div class="swiper-wrapper">
+            <div *ngFor="let image of images; let i=index;" class="swiper-slide" [ngClass]="'thumb-'+i"
+                [class.active-thumb]="i == 0">
+                <img [attr.data-src]="image.url_small" class="swiper-lazy mw-100" (click)="selectImage(i)">
+                <div class="swiper-lazy-preloader"></div>
+            </div>
+        </div>
+    </div>
+</div>

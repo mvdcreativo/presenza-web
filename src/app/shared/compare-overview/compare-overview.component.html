@@ -1,10 +1,10 @@
 <mat-toolbar fxLayoutAlign="space-between center">      
-  <a routerLink="/compare" (click)="hideSheet(true)" mat-raised-button color="primary">Compare - {{ publications.length }}</a>        
+  <a routerLink="/compare" (click)="hideSheet(true)" mat-raised-button color="primary">Comparando - {{ publications.length }}</a>        
   <div fxLayout="row" fxLayoutAlign="end center">
-      <button mat-icon-button (click)="appService.Data.compareList.length = 0; hideSheet(false)" matTooltip="Clear Compare List">
+      <!-- <button mat-icon-button (click)="appService.Data.compareList.length = 0; hideSheet(false)" matTooltip="Clear Compare List">
         <mat-icon color="warn" class="mat-icon-lg">cancel</mat-icon> 
-      </button>
-      <button mat-icon-button (click)="hideSheet(false)" matTooltip="Hide">
+      </button> -->
+      <button mat-icon-button (click)="hideSheet(false)" matTooltip="Ocultar">
         <mat-icon color="primary" class="mat-icon-lg">arrow_drop_down_circle</mat-icon> 
       </button>
   </div>

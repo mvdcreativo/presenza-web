@@ -19,10 +19,11 @@ export class HeaderImageComponent implements OnInit {
   public settings: Settings;
   constructor(public appSettings:AppSettings, private sanitizer:DomSanitizer) {
     this.settings = this.appSettings.settings;
-    this.settings.headerBgImage = true;
+    // this.settings.headerBgImage = true;
   }
 
   ngOnInit() {
+
     if(this.contentOffsetToTop)
       this.settings.contentOffsetToTop = this.contentOffsetToTop;
     if(this.backgroundImage) 

@@ -8,7 +8,7 @@
         </a>
         <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
             <span (mouseleave)="sortMenuTrigger.closeMenu()">
-                <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
+                <button mat-menu-item *ngFor="let sort of sortings; let i=index" (click)="changeSorting(sort)">
                     <span>{{sort}}</span>
                 </button>
             </span>
@@ -16,7 +16,7 @@
     </div>
     <div fxShow="false" fxShow.gt-xs>
         <!-- <span *ngIf="isHomePage"> -->
-            <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
+            <!-- <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
                 Muestra {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
             </a>
             <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
@@ -25,7 +25,7 @@
                         <span>{{count}}</span>
                     </button>
                 </span>
-            </mat-menu>
+            </mat-menu> -->
         <!-- </span>        -->
         <button mat-icon-button (click)="changeViewType('list', 100)">
             <mat-icon>view_list</mat-icon>

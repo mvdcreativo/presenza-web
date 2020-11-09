@@ -1,0 +1,66 @@
+.main-carousel{ 
+    min-height: 80vh;
+    .swiper-slide{              
+        text-align: center;
+        padding-bottom: 66.25%;
+        position: relative;
+        overflow: hidden;  
+        background: rgba(0, 0, 0, 0.04);         
+    }
+    img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        object-fit: cover;
+        object-position: center;
+    } 
+    .control-icons{ 
+        position: absolute;
+        z-index: 2; 
+        top: 24px;
+        right: 20px;
+        button.mat-button{
+            min-width: 36px;
+            width: 36px;
+            padding: 0;
+            margin: 0 4px;
+            background: rgba(255, 252, 252, 0.6);
+            transition: 0.2s; 
+            color:rgba(0, 0, 0, 0.87);
+            &:disabled{
+                color: rgba(0, 0, 0, 0.26); 
+            }
+            &:hover:enabled{
+                background: rgba(255, 252, 252, 1);
+            }             
+        }
+    }
+}
+.small-carousel{
+    .swiper-slide{  
+        max-height: 100px!important;
+
+        img{
+            position: relative;
+            display: block;
+            opacity: 0.5;
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+        &.active-thumb{
+            img{ 
+                border-width: 3px;
+                border-style: solid;
+                box-sizing: border-box;
+                opacity: 1;
+            }           
+        } 
+        .swiper-lazy-preloader{
+            margin-top: 10px;
+        }        
+    } 
+}

@@ -23,22 +23,19 @@ import { of } from 'rxjs';
 })
 export class PropertyComponent implements OnInit {
   @ViewChild('sidenav') sidenav: any;
-  @ViewChildren(SwiperDirective) swipers: QueryList<SwiperDirective>;
   public psConfig: PerfectScrollbarConfigInterface = {
     wheelPropagation: true
   };
   public storageAPI = environment.storageAPI;
   public defaulIconFeature = `${this.storageAPI}images/icons/tick.svg`
   public sidenavOpen: boolean = true;
-  public config: SwiperConfigInterface = {};
-  public config2: SwiperConfigInterface = {};
+
   private sub: any;
   public property: Property;
   public settings: Settings;
   public embedVideo: any;
   public relatedProperties: Publication[];
   public featuredProperties: Publication[];
-  public agent: any;
   public mortgageForm: FormGroup;
   public monthlyPayment: any;
   public contactForm: FormGroup;
@@ -75,7 +72,6 @@ export class PropertyComponent implements OnInit {
     });
     this.getRelatedProperties();
     this.getFeaturedProperties();
-    this.getAgent(1);
     if (window.innerWidth < 960) {
       this.sidenavOpen = false;
       if (this.sidenav) {
@@ -142,13 +138,13 @@ export class PropertyComponent implements OnInit {
 
       this.embedVideo = this.embedService.embed("https://www.360cities.net/video/home");
       setTimeout(() => {
-        this.config.observer = true;
-        this.config2.observer = true;
-        this.swipers.forEach(swiper => {
-          if (swiper) {
-            swiper.setIndex(0);
-          }
-        });
+        // this.config.observer = true;
+        // this.config2.observer = true;
+        // this.swipers.forEach(swiper => {
+        //   if (swiper) {
+        //     swiper.setIndex(0);
+        //   }
+        // });
       });
 
       let port = (this.document.location.port) ? ':' + this.document.location.port + '/' : '/';
@@ -163,95 +159,29 @@ export class PropertyComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.config = {
-      observer: false,
-      slidesPerView: 1,
-      spaceBetween: 0,
-      keyboard: true,
-      navigation: true,
-      pagination: false,
-      grabCursor: true,
-      loop: false,
-      preloadImages: false,
-      lazy: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false
-      }
-    };
-
-    this.config2 = {
-      observer: false,
-      slidesPerView: 10,
-      spaceBetween: 16,
-      keyboard: true,
-      navigation: false,
-      pagination: false,
-      grabCursor: true,
-      loop: false,
-      preloadImages: false,
-      lazy: true,
-      breakpoints: {
-        480: {
-          slidesPerView: 4
-        },
-        600: {
-          slidesPerView: 6,
-        }
-      }
-    }
-
-  }
-
-
-
-
-    // this.http.get(`${this.storageAPI}images/icons/${slug}.svg`).pipe(take(1)).subscribe(
-    //   res => res,
-    //   error => console.log(error)
-
-
-
-    // )
 
       
-
+  public getStatusBgColor(status){
+    switch (status) {
+      case 1:
+        return '#3e92cc';  
+      case 3:
+        return '#d8315b'; 
+      case 4:
+        return '#3e92cc';
+      // case 'No Fees':
+      //   return '#FFA000';
+      // case 'Hot Offer':
+      //   return '#F44336';
+      // case 'Sold':
+      //   return '#000';
+      default: 
+        return '#0a2463';
+    }
+  }
   
 
-  public onOpenedChange() {
-    this.swipers.forEach(swiper => {
-      if (swiper) {
-        swiper.update();
-      }
-    });
-  }
 
-  public selectImage(index: number) {
-    this.swipers.forEach(swiper => {
-      if (swiper['elementRef'].nativeElement.id == 'main-carousel') {
-        swiper.setIndex(index);
-      }
-    });
-  }
-
-  public onIndexChange(index: number) {
-    this.swipers.forEach(swiper => {
-      let elem = swiper['elementRef'].nativeElement;
-      if (elem.id == 'small-carousel') {
-        swiper.setIndex(index);
-        for (let i = 0; i < elem.children[0].children.length; i++) {
-          const element = elem.children[0].children[i];
-          if (element.classList.contains('thumb-' + index)) {
-            element.classList.add('active-thumb');
-          }
-          else {
-            element.classList.remove('active-thumb');
-          }
-        }
-      }
-    });
-  }
 
   public addToCompare() {
     this.appService.addToCompare(this.publication, CompareOverviewComponent, (this.settings.rtl) ? 'rtl' : 'ltr');
@@ -279,12 +209,6 @@ export class PropertyComponent implements OnInit {
     this.appService.getFeaturedProperties().subscribe((publications: any) => {
       this.featuredProperties = publications.slice(0, 3);
     })
-  }
-
-  public getAgent(agentId: number = 1) {
-    var ids = [1, 2, 3, 4, 5]; //agent ids 
-    agentId = ids[Math.floor(Math.random() * ids.length)]; //random agent id
-    this.agent = this.appService.getAgents().filter(agent => agent.id == agentId)[0];
   }
 
   public onContactFormSubmit(values: Object) {

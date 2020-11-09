@@ -1,6 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Property, Response, Location, Publication, PropertyTypes, TransactionTypes, State, City, Municipality, Neighborhood, Feature, ResponsePaginate } from './app.models';
@@ -20,6 +20,17 @@ export class Data {
   providedIn: 'root'
 })
 export class AppService {
+
+  private resultSubject$: BehaviorSubject<ResponsePaginate> = new BehaviorSubject(null)
+  public get resultItems$() {
+    return this.resultSubject$
+  }
+  public setItemsrResult(value) {
+    this.resultSubject$.next(value)
+
+  }
+
+
   public Data = new Data(
     [], // properties
     [], // compareList
@@ -43,9 +54,76 @@ export class AppService {
   }
 
 
-  public getProperties(): Observable<Publication[]> {
-    return this.http.get<ResponsePaginate>(this.url + 'publications').pipe(map(v=> v.data.data))
+
+/////////////////PUBLICACIONES
+  public getStatusProperties(status): Observable<Publication[]> {
+    return this.http.get<ResponsePaginate>(`${environment.API}publications`, {
+      params: new HttpParams()
+        .set('page', '1')
+        .set('status_id', status)
+        .set('filter', '')
+        .set('features_parameter', null)
+        .set('sort', 'desc')
+        .set('per_page', '100000')
+      }).pipe(map(
+        res => {
+          // console.log(res);
+          const resp = res.data.data
+          return resp;
+      }));
+      
+      
+      
+    
   }
+
+ ///listar
+ getProperties(currentPage = 1, perPage = 20, filter='', features_parameter=null, sort= 'desc') : Observable<ResponsePaginate>{
+  return this.http.get<ResponsePaginate>(`${environment.API}publications`, {
+    params: new HttpParams()
+      .set('page', currentPage.toString())
+      .set('filter', filter)
+      .set('features_parameter', JSON.stringify(features_parameter))
+      .set('sort', sort)
+      .set('per_page', perPage.toString())
+
+    }).pipe(map(
+      res => {
+        // console.log(res);
+        
+        this.setItemsrResult(res)
+        const resp = res
+        return resp;
+    })
+    
+    )
+  }
+
+  getNexProperties(currentPage = 1, perPage = 20, filter='', features_parameter=null, sort= 'desc') : Observable<ResponsePaginate>{
+    return this.http.get<ResponsePaginate>(`${environment.API}publications`, {
+      params: new HttpParams()
+        .set('page', currentPage.toString())
+        .set('filter', filter)
+        .set('features_parameter', JSON.stringify(features_parameter))
+        .set('sort', sort)
+        .set('per_page', perPage.toString())
+  
+      }).pipe(map(
+        res => {
+          // console.log(res);
+          const items = this.resultSubject$.value.data.data;
+          let respuesta: ResponsePaginate = Object.assign({}, res);
+          respuesta.data.data = [...items, ...respuesta.data.data ]
+          // console.log(respuesta);
+          this.setItemsrResult(respuesta)
+          // this.addItemsResult(res.data.data)
+          const resp = res
+          return resp;
+      })
+      
+      )
+  }
+////////////////////////////
 
   public getPropertyById(id): Observable<Publication> {
     return this.http.get<Response>(`${this.url}publications/${id}`).pipe(map(v=> v.data));
@@ -181,261 +259,263 @@ export class AppService {
     console.log(params);
 
 
-    if (params) {
-      //FILTRO FEATURES
+    this.getProperties
 
-      features.forEach(feature => {
-        const param = feature.slug;
-        if (params[param]) {
+    // if (params) {
+    //   //FILTRO FEATURES
 
-          var properties = []
+    //   features.forEach(feature => {
+    //     const param = feature.slug;
+    //     if (params[param]) {
 
-          data.forEach((publication: Publication) => {
-            const properyFeatures: Feature[] = publication.property.features;
-            properyFeatures.forEach(
-              featurePublication => {
+    //       var properties = []
+
+    //       data.forEach((publication: Publication) => {
+    //         const properyFeatures: Feature[] = publication.property.features;
+    //         properyFeatures.forEach(
+    //           featurePublication => {
 
 
-                if (
-                  featurePublication.pivot.value === params[param].toString()
-                  && featurePublication.slug === param
-                ) {
-                  if (!properties.includes(publication)) {
-                    properties.push(publication);
-                  }
-                }
+    //             if (
+    //               featurePublication.pivot.value === params[param].toString()
+    //               && featurePublication.slug === param
+    //             ) {
+    //               if (!properties.includes(publication)) {
+    //                 properties.push(publication);
+    //               }
+    //             }
 
                 
 
 
 
-                if (featurePublication.type === "OPC"
-                  && params[param] === true
-                  && featurePublication.slug === param
-                ) {
-                  if (!properties.includes(publication)) {
-                    properties.push(publication);
-                  }
-                }
+    //             if (featurePublication.type === "OPC"
+    //               && params[param] === true
+    //               && featurePublication.slug === param
+    //             ) {
+    //               if (!properties.includes(publication)) {
+    //                 properties.push(publication);
+    //               }
+    //             }
 
 
 
-                if (featurePublication.type === "VAL100"
-                  && featurePublication.slug === param
-                ) {
+    //             if (featurePublication.type === "VAL100"
+    //               && featurePublication.slug === param
+    //             ) {
 
-                  let rango = params[param].split("-")
-                  console.log(rango);
+    //               let rango = params[param].split("-")
+    //               console.log(rango);
                   
-                  if(parseInt(featurePublication.pivot.value) >= parseInt(rango[0]) 
-                  && parseInt(featurePublication.pivot.value) <= parseInt(rango[1])
-                  ){
+    //               if(parseInt(featurePublication.pivot.value) >= parseInt(rango[0]) 
+    //               && parseInt(featurePublication.pivot.value) <= parseInt(rango[1])
+    //               ){
                     
-                    if (!properties.includes(publication)) {
-                      properties.push(publication);
-                    }
-                  }
-                }
+    //                 if (!properties.includes(publication)) {
+    //                   properties.push(publication);
+    //                 }
+    //               }
+    //             }
 
-              //   if (featurePublication.type === "VALSTR"
-              //   && featurePublication.pivot.value === params[param]
-              //   && featurePublication.slug === param
-              //   ) {
-              //   if (!properties.includes(publication)) {
-              //     properties.push(publication);
-              //   }
-              // }
-
-
-              }
-            )
-          })
+    //           //   if (featurePublication.type === "VALSTR"
+    //           //   && featurePublication.pivot.value === params[param]
+    //           //   && featurePublication.slug === param
+    //           //   ) {
+    //           //   if (!properties.includes(publication)) {
+    //           //     properties.push(publication);
+    //           //   }
+    //           // }
 
 
-          data = properties
-          console.log(data);
-        }
-
-      });
+    //           }
+    //         )
+    //       })
 
 
+    //       data = properties
+    //       console.log(data);
+    //     }
+
+    //   });
 
 
 
 
-      //////
-
-      if (params.propertyType) {
-        data = data.filter((publication: Publication) => publication.property.property_type_id === params.propertyType.id)
-      }
-      /// Filtro Tipo de Operación
-      if (params.propertyStatus && params.propertyStatus.length) {
-        let statuses = [];
-        params.propertyStatus.forEach(status => { statuses.push(status.id) });
-        let properties = [];
-        data.filter((publication: Publication) =>
-          publication.transaction_types.forEach(status => {
-            // console.log(status);
-
-            if (statuses.indexOf(status.id) > -1) {
-              if (!properties.includes(publication)) {
-                properties.push(publication);
-              }
-            }
-          })
-        );
-        data = properties;
-      }
-      /// Filtro PREIO
-      if (params?.price) {
-        if (params.price.from) {
-          data = data.filter((publication: Publication) => {
-            let fromVerdadero = false
-            publication.transaction_types.forEach(transaction => {
-              if (transaction.pivot?.price >= params.price?.from) {
-                console.log(transaction.pivot?.price);
-                fromVerdadero = true
-              }
-            });
-            return fromVerdadero
-          });
-        }
-        if (params?.price?.to) {
-          data = data.filter((publication: Publication) => {
-            let toVerdadero = false
-            publication.transaction_types.forEach(transaction => {
-              if (transaction.pivot?.price <= params.price?.to) {
-                console.log(transaction.pivot?.price);
-                toVerdadero = true
-              }
-            });
-            return toVerdadero
-          });
-        }
-      }
-
-      if (params.state) {
-        data = data.filter(publication => publication.property.neighborhood.municipality.city.province_id == params.state.id)
-      }
-      if (params.municipality) {
-        data = data.filter(publication => publication.property.neighborhood.municipality_id == params.municipality.id)
-      }
-      if (params.city) {
-        data = data.filter(publication => publication.property.neighborhood.municipality.city_id == params.city.id)
-      }
-
-      // if(params.zipCode){
-      //   data = data.filter(property => property.zipCode == params.zipCode)
-      // }
-
-      if (params.neighborhood && params.neighborhood.length) {
-        let neighborhoods = [];
-        params.neighborhood.forEach(item => { neighborhoods.push(item.id) });
-        let properties = [];
-        data.filter(publication => {
-          if (neighborhoods.indexOf(publication.property.neighborhood.id) > -1) {
-            if (!properties.includes(publication)) {
-              return properties.push(publication);
-            }
-          }
-
-        });
-        data = properties;
-      }
-
-      // if (params.street && params.street.length) {
-      //   let streets = [];
-      //   params.street.forEach(item => { streets.push(item.name) });
-      //   let properties = [];
-      //   data.filter(property =>
-      //     property.street.forEach(item => {
-      //       if (streets.indexOf(item) > -1) {
-      //         if (!properties.includes(property)) {
-      //           properties.push(property);
-      //         }
-      //       }
-      //     })
-      //   );
-      //   data = properties;
-      // }
-
-      // if (params.bedrooms) {
-      //   if (params.bedrooms.from) {
-      //     data = data.filter(property => property.bedrooms >= params.bedrooms.from)
-      //   }
-      //   if (params.bedrooms.to) {
-      //     data = data.filter(property => property.bedrooms <= params.bedrooms.to)
-      //   }
-      // }
-
-      // if (params.bathrooms) {
-      //   if (params.bathrooms.from) {
-      //     data = data.filter(property => property.bathrooms >= params.bathrooms.from)
-      //   }
-      //   if (params.bathrooms.to) {
-      //     data = data.filter(property => property.bathrooms <= params.bathrooms.to)
-      //   }
-      // }
-
-      // if (params.garages) {
-      //   if (params.garages.from) {
-      //     data = data.filter(property => property.garages >= params.garages.from)
-      //   }
-      //   if (params.garages.to) {
-      //     data = data.filter(property => property.garages <= params.garages.to)
-      //   }
-      // }
-
-      // if (params.area) {
-      //   if (params.area.from) {
-      //     data = data.filter(property => property.area.value >= params.area.from)
-      //   }
-      //   if (params.area.to) {
-      //     data = data.filter(property => property.area.value <= params.area.to)
-      //   }
-      // }
-
-      // if (params.yearBuilt) {
-      //   if (params.yearBuilt.from) {
-      //     data = data.filter(property => property.yearBuilt >= params.yearBuilt.from)
-      //   }
-      //   if (params.yearBuilt.to) {
-      //     data = data.filter(property => property.yearBuilt <= params.yearBuilt.to)
-      //   }
-      // }
-
-      // if (params.features) {
-      //   let arr = [];
-      //   params.features.forEach(feature => {
-      //     if (feature.selected)
-      //       arr.push(feature.name);
-      //   });
-      //   if (arr.length > 0) {
-      //     let properties = [];
-      //     data.filter(property =>
-      //       property.features.forEach(feature => {
-      //         if (arr.indexOf(feature) > -1) {
-      //           if (!properties.includes(property)) {
-      //             properties.push(property);
-      //           }
-      //         }
-      //       })
-      //     );
-      //     data = properties;
-      //   }
-
-      // }
-
-    }
 
 
-    // //for show more properties mock data 
-    // for (var index = 0; index < 2; index++) {
-    //   data = data.concat(data);
+    //   //////
+
+    //   if (params.propertyType) {
+    //     data = data.filter((publication: Publication) => publication.property.property_type_id === params.propertyType.id)
+    //   }
+    //   /// Filtro Tipo de Operación
+    //   if (params.propertyStatus && params.propertyStatus.length) {
+    //     let statuses = [];
+    //     params.propertyStatus.forEach(status => { statuses.push(status.id) });
+    //     let properties = [];
+    //     data.filter((publication: Publication) =>
+    //       publication.transaction_types.forEach(status => {
+    //         // console.log(status);
+
+    //         if (statuses.indexOf(status.id) > -1) {
+    //           if (!properties.includes(publication)) {
+    //             properties.push(publication);
+    //           }
+    //         }
+    //       })
+    //     );
+    //     data = properties;
+    //   }
+    //   /// Filtro PREIO
+    //   if (params?.price) {
+    //     if (params.price.from) {
+    //       data = data.filter((publication: Publication) => {
+    //         let fromVerdadero = false
+    //         publication.transaction_types.forEach(transaction => {
+    //           if (transaction.pivot?.price >= params.price?.from) {
+    //             console.log(transaction.pivot?.price);
+    //             fromVerdadero = true
+    //           }
+    //         });
+    //         return fromVerdadero
+    //       });
+    //     }
+    //     if (params?.price?.to) {
+    //       data = data.filter((publication: Publication) => {
+    //         let toVerdadero = false
+    //         publication.transaction_types.forEach(transaction => {
+    //           if (transaction.pivot?.price <= params.price?.to) {
+    //             console.log(transaction.pivot?.price);
+    //             toVerdadero = true
+    //           }
+    //         });
+    //         return toVerdadero
+    //       });
+    //     }
+    //   }
+
+    //   if (params.state) {
+    //     data = data.filter(publication => publication.property.neighborhood.municipality.city.province_id == params.state.id)
+    //   }
+    //   if (params.municipality) {
+    //     data = data.filter(publication => publication.property.neighborhood.municipality_id == params.municipality.id)
+    //   }
+    //   if (params.city) {
+    //     data = data.filter(publication => publication.property.neighborhood.municipality.city_id == params.city.id)
+    //   }
+
+    //   // if(params.zipCode){
+    //   //   data = data.filter(property => property.zipCode == params.zipCode)
+    //   // }
+
+    //   if (params.neighborhood && params.neighborhood.length) {
+    //     let neighborhoods = [];
+    //     params.neighborhood.forEach(item => { neighborhoods.push(item.id) });
+    //     let properties = [];
+    //     data.filter(publication => {
+    //       if (neighborhoods.indexOf(publication.property.neighborhood.id) > -1) {
+    //         if (!properties.includes(publication)) {
+    //           return properties.push(publication);
+    //         }
+    //       }
+
+    //     });
+    //     data = properties;
+    //   }
+
+    //   // if (params.street && params.street.length) {
+    //   //   let streets = [];
+    //   //   params.street.forEach(item => { streets.push(item.name) });
+    //   //   let properties = [];
+    //   //   data.filter(property =>
+    //   //     property.street.forEach(item => {
+    //   //       if (streets.indexOf(item) > -1) {
+    //   //         if (!properties.includes(property)) {
+    //   //           properties.push(property);
+    //   //         }
+    //   //       }
+    //   //     })
+    //   //   );
+    //   //   data = properties;
+    //   // }
+
+    //   // if (params.bedrooms) {
+    //   //   if (params.bedrooms.from) {
+    //   //     data = data.filter(property => property.bedrooms >= params.bedrooms.from)
+    //   //   }
+    //   //   if (params.bedrooms.to) {
+    //   //     data = data.filter(property => property.bedrooms <= params.bedrooms.to)
+    //   //   }
+    //   // }
+
+    //   // if (params.bathrooms) {
+    //   //   if (params.bathrooms.from) {
+    //   //     data = data.filter(property => property.bathrooms >= params.bathrooms.from)
+    //   //   }
+    //   //   if (params.bathrooms.to) {
+    //   //     data = data.filter(property => property.bathrooms <= params.bathrooms.to)
+    //   //   }
+    //   // }
+
+    //   // if (params.garages) {
+    //   //   if (params.garages.from) {
+    //   //     data = data.filter(property => property.garages >= params.garages.from)
+    //   //   }
+    //   //   if (params.garages.to) {
+    //   //     data = data.filter(property => property.garages <= params.garages.to)
+    //   //   }
+    //   // }
+
+    //   // if (params.area) {
+    //   //   if (params.area.from) {
+    //   //     data = data.filter(property => property.area.value >= params.area.from)
+    //   //   }
+    //   //   if (params.area.to) {
+    //   //     data = data.filter(property => property.area.value <= params.area.to)
+    //   //   }
+    //   // }
+
+    //   // if (params.yearBuilt) {
+    //   //   if (params.yearBuilt.from) {
+    //   //     data = data.filter(property => property.yearBuilt >= params.yearBuilt.from)
+    //   //   }
+    //   //   if (params.yearBuilt.to) {
+    //   //     data = data.filter(property => property.yearBuilt <= params.yearBuilt.to)
+    //   //   }
+    //   // }
+
+    //   // if (params.features) {
+    //   //   let arr = [];
+    //   //   params.features.forEach(feature => {
+    //   //     if (feature.selected)
+    //   //       arr.push(feature.name);
+    //   //   });
+    //   //   if (arr.length > 0) {
+    //   //     let properties = [];
+    //   //     data.filter(property =>
+    //   //       property.features.forEach(feature => {
+    //   //         if (arr.indexOf(feature) > -1) {
+    //   //           if (!properties.includes(property)) {
+    //   //             properties.push(property);
+    //   //           }
+    //   //         }
+    //   //       })
+    //   //     );
+    //   //     data = properties;
+    //   //   }
+
+    //   // }
+
     // }
 
-    this.sortData(sort, data);
-    return this.paginator(data, page, perPage)
+
+    // // //for show more properties mock data 
+    // // for (var index = 0; index < 2; index++) {
+    // //   data = data.concat(data);
+    // // }
+
+    // this.sortData(sort, data);
+    // return this.paginator(data, page, perPage)
   }
 
   public sortData(sort, data) {

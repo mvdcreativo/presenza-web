@@ -31,12 +31,12 @@
     
     <div class="theme-container"> 
 
-        <div fxLayout="row wrap" class="properties-wrapper">
+        <div fxLayout="row wrap" class="properties-wrapper" *ngIf="properties | async as properties" >
             
             <div fxFlex="100" fxLayoutAlign="start start" class="p-2"> 
                 <mat-chip-list [ngClass]="(settings.rtl) ? 'ml-2' : 'mr-2'">
                     <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
-                        {{ pagination?.total }} encontrados
+                        {{ totalResut }} encontrados
                     </mat-chip> 
                 </mat-chip-list>
                 <app-properties-search-results-filters 
@@ -45,8 +45,7 @@
                 </app-properties-search-results-filters>                 
             </div>
             <div fxFlex="100" class="p-2">                
-                <app-properties-toolbar [isHomePage]="true" 
-                                        (onChangeCount)="changeCount($event)"
+                <app-properties-toolbar [isHomePage]="true"
                                         (onChangeSorting)="changeSorting($event)"
                                         (onChangeViewType)="changeViewType($event)">
                 </app-properties-toolbar>
@@ -54,9 +53,9 @@
             <div *ngFor="let property of properties" [fxFlex]="(viewType=='grid') ? viewCol : 100" class="item">                         
                 <app-property-item [publication]="property" [viewType]="viewType" [viewColChanged]="viewCol"></app-property-item>
             </div>
-            <div *ngIf="properties?.length" fxFlex="100" fxLayoutAlign="center center" class="p-2 mt-2">                
+            <!-- <div *ngIf="properties?.length" fxFlex="100" fxLayoutAlign="center center" class="p-2 mt-2">                
                 <app-load-more [step]="2"></app-load-more> 
-            </div>
+            </div> -->
 
             <div *ngIf="properties?.length == 0" fxFlex="100" fxLayoutAlign="center center" [style.min-height.px]="200">                
                 <mat-spinner *ngIf="!message"></mat-spinner>
@@ -81,9 +80,9 @@
 
 <!-- <app-testimonials></app-testimonials>  -->
 
-<app-hot-offer-today  *ngIf="properties" [propertyId]="3"></app-hot-offer-today> 
+<app-hot-offer-today  *ngIf="hotOfferToday_id" [propertyId]="hotOfferToday_id"></app-hot-offer-today> 
 
-<app-featured-properties  *ngIf="properties" [properties]="featuredProperties"></app-featured-properties>
+<app-featured-properties  *ngIf="featuredProperties | async as featuredProperties" [properties]="featuredProperties | slice:0:20" ></app-featured-properties>
 
 <!-- <app-our-agents></app-our-agents> -->
       

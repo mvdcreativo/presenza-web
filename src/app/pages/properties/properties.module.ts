@@ -6,6 +6,13 @@ import { MatVideoModule } from 'mat-video';
 import { SharedModule } from '../../shared/shared.module';
 import { PropertiesComponent } from './properties.component';
 import { PropertyComponent } from './property/property.component';
+import { SwiperConfigInterface, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { GaleryComponent } from './property/galery/galery.component';
+
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
+};
 
 export const routes = [
   { path: '', component: PropertiesComponent, pathMatch: 'full' },
@@ -15,7 +22,7 @@ export const routes = [
 @NgModule({
   declarations: [
     PropertiesComponent, 
-    PropertyComponent
+    PropertyComponent, GaleryComponent
   ],
   exports: [
     PropertiesComponent, 
@@ -26,6 +33,12 @@ export const routes = [
     AgmCoreModule, 
     MatVideoModule,
     SharedModule
+  ],
+  providers: [
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG
+    }
   ]
 })
 export class PropertiesModule { }

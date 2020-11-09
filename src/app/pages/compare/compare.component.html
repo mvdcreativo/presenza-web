@@ -1,16 +1,19 @@
 <div class="px-3">
   <div class="theme-container">
 
-    <div *ngIf="compareList.length == 0" class="py-5">  
+    <div *ngIf="compareList.length == 0" class="no-compare py-5">  
       <mat-chip-list>
           <mat-chip color="warn" selected="true" class="uppercase">No tienes propiedades para comparar.</mat-chip>
       </mat-chip-list>
+      <div class="no-compare-items">
+        <img src="../../../assets/images/compara.svg" alt="como comparar">
+      </div>
     </div>
   
     <div *ngIf="compareList.length > 0" class="compare-carousel py-3"> 
       
       <mat-card fxLayout="row" fxLayoutAlign="space-between center" class="compare-toolbar">      
-        <h3 class="uppercase">Compare: {{compareList.length}}</h3>      
+        <h3 class="uppercase">Comparando: {{compareList.length}}</h3>      
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="config.simulateTouch">
             <button mat-mini-fab color="primary" class="carousel-prev swiper-button-prev swipe-arrow mx-2"><mat-icon>keyboard_arrow_left</mat-icon></button>
             <button mat-mini-fab color="primary" class="carousel-next swiper-button-next swipe-arrow mx-2"><mat-icon>keyboard_arrow_right</mat-icon></button> 
@@ -69,7 +72,8 @@
                         <div *ngFor="let fp of formatFeatures(publication)" class="item">
                           <h3>{{ fp.name }}</h3>
                           <div class="feature-item" *ngFor="let f of fp.features">
-                              <img class="icon" [src]="f.icon ? f.icon : defaulIconFeature">
+                              <!-- <img class="icon" [src]="f.icon ? f.icon : defaulIconFeature"> -->
+                              <mat-icon color="accent" class="icon material-icons-outlined material-icons-round">check_circle</mat-icon>
                               <span class="mx-2">{{f.name}}</span>
                               <span class="mx-2"><strong>{{f.pivot.value}}</strong></span>
                           </div>

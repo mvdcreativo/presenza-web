@@ -36,6 +36,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -110,7 +112,9 @@ import { LogoComponent } from './logo/logo.component';
     MatStepperModule,
     PerfectScrollbarModule,
     PipesModule,
-    DirectivesModule
+    DirectivesModule,
+    InfiniteScrollModule
+    
   ],
   exports: [
     RouterModule,
@@ -171,7 +175,8 @@ import { LogoComponent } from './logo/logo.component';
     TestimonialsComponent,   
     OurAgentsComponent, 
     MissionComponent, 
-    OurServicesComponent
+    OurServicesComponent,
+    InfiniteScrollModule
   ],
   declarations: [ 
     LogoComponent,

@@ -95,18 +95,18 @@ export class AgentComponent implements OnInit {
    
 
   public getProperties(){   
-    this.appService.getPropertiesByAgentId(this.agentId).subscribe(data => { 
-      let result = this.filterData(data); 
-      if(result.data.length == 0){
-        this.properties.length = 0;
-        this.pagination = new Pagination(1, this.count, null, 2, 0, 0);  
-        this.message = 'No Results Found';
-        return false;
-      } 
-      this.properties = result.data; 
-      this.pagination = result.pagination;
-      this.message = null;
-    })
+    // this.appService.getPropertiesByAgentId(this.agentId).subscribe(data => { 
+    //   let result = this.filterData(data); 
+    //   if(result.data.length == 0){
+    //     this.properties.length = 0;
+    //     this.pagination = new Pagination(1, this.count, null, 2, 0, 0);  
+    //     this.message = 'No Results Found';
+    //     return false;
+    //   } 
+    //   this.properties = result.data; 
+    //   this.pagination = result.pagination;
+    //   this.message = null;
+    // })
   }
 
   public resetPagination(){ 
