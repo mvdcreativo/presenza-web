@@ -32,7 +32,7 @@
                   <mat-icon color="warn" class="mat-icon-lg">highlight_off</mat-icon>
                 </button>              
                 <mat-card-content>
-                    <h2 class="title"><a [routerLink]="['/properties', publication.id]">{{publication.property.title}}</a></h2>
+                    <h2 class="title"><a [routerLink]="['/propiedades', publication.id]">{{publication.property.title}}</a></h2>
                     <p fxLayout="row" fxLayoutAlign="center center" class="address">
                         <mat-icon class="text-muted">location_on</mat-icon>
                         <span>{{publication.property.address}}</span>
@@ -113,7 +113,7 @@
                     <p>{{publication.property.description}}</p>                     
                 </mat-card-content> 
                 <mat-card-actions class="text-center">  
-                    <a [routerLink]="['/properties', publication.id]" mat-raised-button color="primary" class="uppercase mb-3">Más Info</a>                     
+                    <a [routerLink]="['/propiedades', publication.id]" mat-raised-button color="primary" class="uppercase mb-3">Más Info</a>                     
                 </mat-card-actions>             
             </mat-card> 
 
