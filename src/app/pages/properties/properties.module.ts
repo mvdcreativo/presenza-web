@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AgmCoreModule } from '@agm/core'; 
-import { MatVideoModule } from 'mat-video';
 import { SharedModule } from '../../shared/shared.module';
 import { PropertiesComponent } from './properties.component';
 import { PropertyComponent } from './property/property.component';
 import { SwiperConfigInterface, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { GaleryComponent } from './property/galery/galery.component';
+import { ContactForPropertyComponent } from './property/contact-for-property/contact-for-property.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -22,7 +22,7 @@ export const routes = [
 @NgModule({
   declarations: [
     PropertiesComponent, 
-    PropertyComponent, GaleryComponent
+    PropertyComponent, GaleryComponent, ContactForPropertyComponent
   ],
   exports: [
     PropertiesComponent, 
@@ -31,7 +31,6 @@ export const routes = [
     CommonModule,
     RouterModule.forChild(routes),
     AgmCoreModule, 
-    MatVideoModule,
     SharedModule
   ],
   providers: [

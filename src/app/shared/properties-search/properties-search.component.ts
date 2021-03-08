@@ -4,6 +4,7 @@ import { AppService } from '../../app.service';
 import { PropertyTypes, TransactionTypes, State, City, Neighborhood, Municipality, Feature } from 'src/app/app.models';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-properties-search',
@@ -46,18 +47,74 @@ export class PropertiesSearchComponent implements OnInit, OnDestroy {
     { name: "2000 a 3000", value: "2000-3000" },
     { name: "3000 a 4000", value: "3000-4000" },
   ]
+  public valano = [
+    { name: "0 a 5", value: "0-5" },
+    { name: "5 a 10", value: "5-10" },
+    { name: "10 a 20", value: "10-20" },
+    { name: "más de 20", value: "20-1000" },
 
-  public propertyStatus = [
-    { "value": 1,"name": "Bueno"},
-    {"value": 2,"name": "A estrenar"},
-    {"value": 3,"name": "Exelente"},
-    {"value": 4,"name": "Para reciclar"},
-    {"value": 5,"name": "Malo"},
-    {"value": 6,"name": "Detalles"},
-    {"value": 7,"name": "Con mejoras"}
   ]
 
-  constructor(public appService: AppService, public fb: FormBuilder) {
+  public capveh = [
+    { name: "0 a 3", value: "0-3" },
+    { name: "3 a 5", value: "3-5" },
+    { name: "5 a 10", value: "5-10" },
+    { name: "10 a 20", value: "10-20" },
+    { name: "más de 20", value: "20-1000" },
+
+  ]
+
+  public propertyStatus = [
+    {
+      "value": "Rergular",
+      "name": "Rergular"
+    },
+    {
+      "value": "A Refaccionar",
+      "name": "A Refaccionar"
+    },
+    {
+      "value": "Reciclado",
+      "name": "Reciclado"
+    },
+    {
+      "value": "Bueno",
+      "name": "Bueno"
+    },
+    {
+      "value": "Muy Bueno",
+      "name": "Muy Bueno"
+    },
+    {
+      "value": "Excelente",
+      "name": "Excelente"
+    }
+  ]
+
+  public orientation = [
+    {
+        "value": "Sur",
+        "name": "Sur"
+    },
+    {
+        "value": "Norte",
+        "name": "Norte"
+    },
+    {
+        "value": "Este",
+        "name": "Este"
+    },
+    {
+        "value": "Oeste",
+        "name": "Oeste"
+    }
+]
+
+  constructor(
+    public appService: AppService, 
+    public fb: FormBuilder,
+    public router:Router,
+    ) {
 
   }
 
@@ -80,10 +137,10 @@ export class PropertiesSearchComponent implements OnInit, OnDestroy {
         res => {
           // this.features = res
           this.featurePrimary = res.filter(
-            fprimary => fprimary.features?.length > 0 && fprimary.type === "MULTI"
+            fprimary => fprimary.features?.length > 0 && fprimary.type === "GRP"
           )
           this.featureSecondary = res.filter(
-            f => f.type !== "MULTI"
+            f => f.type !== "GRP"
           )
           if (this.featureSecondary) {
             console.log(this.featureSecondary)
@@ -91,7 +148,7 @@ export class PropertiesSearchComponent implements OnInit, OnDestroy {
             this.featureSecondary.forEach(featureSecondary => {
               this.form.addControl(featureSecondary.slug, new FormControl(null));
             })
-            
+
             this.onSearchChange.emit(this.form);
             // features:
           }
@@ -117,7 +174,6 @@ export class PropertiesSearchComponent implements OnInit, OnDestroy {
       city: null,
       // zipCode: null,
       neighborhood: null,
-      
     });
 
   }
@@ -147,6 +203,14 @@ export class PropertiesSearchComponent implements OnInit, OnDestroy {
     return this.fb.array(arr);
   }
 
+  changeExpens(desde = 0, hasta = 0){
+
+    this.form.get('expensas') 
+    ? this.form.get('expensas').setValue(`${desde}-${hasta}`)
+    :false
+    
+    console.log(this.form.get('expensas').value)
+  }
 
   ngOnChanges() {
     if (this.removedSearchField) {
@@ -162,6 +226,10 @@ export class PropertiesSearchComponent implements OnInit, OnDestroy {
         this.form.controls[this.removedSearchField].reset();
       }
     }
+  }
+
+  busquedaAvanzada(){
+    this.router.navigate(['/propiedades'])
   }
 
   public reset() {

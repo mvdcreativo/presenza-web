@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   API:"http://presenza_api_v1.test/api/",
   storageAPI:"http://presenza_api_v1.test/storage/",
-  API_KEY_GM : "AIzaSyDYkJQ4CJrY3YrvR-1fcn36K4-iuyZsiGI",
+  API_KEY_GM : "AIzaSyBgkTr7pr2hwsa4Gkk499GLfcm01j0CsvQ",
   urlAssets : "assets/"
   // API:"http://api.presenza.picaworks.com/api/",
   // storageAPI:"http://api.presenza.picaworks.com/storage/",

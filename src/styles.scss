@@ -9,3 +9,52 @@
 @import "app/theme/styles/theme";
 @import "app/theme/styles/rtl";
 @import '~swiper/dist/css/swiper.min.css';
+@import 'app/shared/utils/loaders/loading.scss';
+@import '~@vime/core/themes/default.css';
+@import '~@vime/core/themes/light.css';
+
+.material-icons{
+  font-weight: 300!important;
+}
+/////ANIMATIONS
+
+ 
+//////////////
+//input formfields
+.mat-form-field, .mat-checkbox{
+  font-size:12px!important;
+}
+.mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end{
+    background-color: white!important;
+}
+.mat-form-field-outline {
+    color: white!important; //color de borde
+}
+  
+  ///altura formField
+  .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+  .mat-form-field-label-wrapper { top: -1.4em; }
+  
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+      transform: translateY(-1.1em) scale(.75);
+      width: 133.33333%;
+  }
+
+
+
+
+.widget{
+  .mat-form-field, .mat-checkbox{
+    font-size:14px!important;
+  }
+  .mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end{
+      background-color:  #f8f8f8!important;
+  }
+  .mat-form-field-outline {
+      color:  #f8f8f8!important; //color de borde
+  }
+}
+  
+.swiper-container{
+  z-index: 0;
+}

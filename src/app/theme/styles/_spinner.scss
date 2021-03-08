@@ -1,4 +1,4 @@
-$spinner-color: #ffd4d4;
+$spinner-color: #d32f2f;
 .spinner-wrapper{
     position:fixed;
     top:0;
@@ -6,7 +6,7 @@ $spinner-color: #ffd4d4;
     width:100%;
     height:100%;
     z-index: 9999;
-    background: #fff;
+    background: #fafafa;
     visibility: visible;
     opacity: 1; 
     -webkit-transition: visibility 0.5s, opacity 0.3s linear;

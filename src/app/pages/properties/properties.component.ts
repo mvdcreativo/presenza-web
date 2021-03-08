@@ -140,18 +140,10 @@ export class PropertiesComponent implements OnInit {
     // }
   }
   public searchChanged(event: FormGroup) {
-    event.valueChanges.subscribe(() => {
-      // this.resetPagination(); 
+
+    event.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(() => {
       this.searchFields = event.value
 
-      setTimeout(() => {
-        this.removedSearchField = null;
-      });
-      if (!this.settings.searchOnBtnClick) {
-        // this.properties.length = 0;  
-      }
-    });
-    event.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(() => {
       if (!this.settings.searchOnBtnClick) {
 
         // borra criterios null

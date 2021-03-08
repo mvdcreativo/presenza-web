@@ -217,30 +217,7 @@ export class AppService {
 
   public getStreets() {
     return [
-      { id: 1, name: 'Astoria Street #1', cityId: 1, neighborhoodId: 1 },
-      { id: 2, name: 'Astoria Street #2', cityId: 1, neighborhoodId: 1 },
-      { id: 3, name: 'Midtown Street #1', cityId: 1, neighborhoodId: 2 },
-      { id: 4, name: 'Midtown Street #2', cityId: 1, neighborhoodId: 2 },
-      { id: 5, name: 'Chinatown Street #1', cityId: 1, neighborhoodId: 3 },
-      { id: 6, name: 'Chinatown Street #2', cityId: 1, neighborhoodId: 3 },
-      { id: 7, name: 'Austin Street #1', cityId: 2, neighborhoodId: 4 },
-      { id: 8, name: 'Austin Street #2', cityId: 2, neighborhoodId: 4 },
-      { id: 9, name: 'Englewood Street #1', cityId: 2, neighborhoodId: 5 },
-      { id: 10, name: 'Englewood Street #2', cityId: 2, neighborhoodId: 5 },
-      { id: 11, name: 'Riverdale Street #1', cityId: 2, neighborhoodId: 6 },
-      { id: 12, name: 'Riverdale Street #2', cityId: 2, neighborhoodId: 6 },
-      { id: 13, name: 'Hollywood Street #1', cityId: 3, neighborhoodId: 7 },
-      { id: 14, name: 'Hollywood Street #2', cityId: 3, neighborhoodId: 7 },
-      { id: 15, name: 'Sherman Oaks Street #1', cityId: 3, neighborhoodId: 8 },
-      { id: 16, name: 'Sherman Oaks Street #2', cityId: 3, neighborhoodId: 8 },
-      { id: 17, name: 'Highland Park Street #1', cityId: 3, neighborhoodId: 9 },
-      { id: 18, name: 'Highland Park Street #2', cityId: 3, neighborhoodId: 9 },
-      { id: 19, name: 'Belltown Street #1', cityId: 4, neighborhoodId: 10 },
-      { id: 20, name: 'Belltown Street #2', cityId: 4, neighborhoodId: 10 },
-      { id: 21, name: 'Queen Anne Street #1', cityId: 4, neighborhoodId: 11 },
-      { id: 22, name: 'Queen Anne Street #2', cityId: 4, neighborhoodId: 11 },
-      { id: 23, name: 'Green Lake Street #1', cityId: 4, neighborhoodId: 12 },
-      { id: 24, name: 'Green Lake Street #2', cityId: 4, neighborhoodId: 12 }
+
     ]
   }
 
@@ -259,7 +236,7 @@ export class AppService {
     console.log(params);
 
 
-    this.getProperties
+    this.getProperties()
 
     // if (params) {
     //   //FILTRO FEATURES

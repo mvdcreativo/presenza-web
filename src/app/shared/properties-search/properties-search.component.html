@@ -1,7 +1,7 @@
-<form *ngIf="featurePrimary" [formGroup]="form" class="search-wrapper" [ngClass]="'variant-'+variant">
-    <h2 fxLayoutAlign="start center"><i class="material-icons-round p-2">tune</i> Filtros</h2>
+<h2 fxLayoutAlign="start center"><i class="material-icons-round p-2">tune</i> Filtros</h2>
+<form *ngIf="featurePrimary; else loading" [formGroup]="form" class="search-wrapper" [ngClass]="'variant-'+variant">
     <div [fxLayout]="(vertical) ? 'column' : 'row wrap'">
-        
+
         <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
             <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
                 <mat-label>Tipo de Propiedad</mat-label>
@@ -127,16 +127,53 @@
                                 {{ featurePrimary[ip].features[i].name }}</mat-checkbox>
                         </div>
 
-                        <mat-form-field *ngIf="featurePrimary[ip].features[i].type === 'VAL'"
+                        <mat-form-field *ngIf="featurePrimary[ip].features[i].type === 'VAL' 
+                        && featurePrimary[ip].features[i].slug !== 'uf-unidad-funcional'"
                             [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
                             <mat-label>
-                                {{(variant == 1) ? featurePrimary[ip].features[i].name: featurePrimary[ip].features[i].name}}
+                                {{(variant == 1) ? featurePrimary[ip].features[i].name:
+                                featurePrimary[ip].features[i].name}}
                             </mat-label>
                             <mat-select placeholder="{{ featurePrimary[ip].features[i].name }}"
                                 [formControlName]="featurePrimary[ip].features[i].slug">
                                 <mat-option>No especificar</mat-option>
-                                <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]" [value]="number">
-                                    {{ number }}
+
+                                <ng-container *ngIf="true">
+                                    <mat-option *ngFor="let number of [1,2,3,4,5,6,7,8,9,10]" [value]="number">
+                                        {{ number }}
+                                    </mat-option>
+                                </ng-container>
+
+
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field *ngIf="featurePrimary[ip].features[i].type === 'VALANO'"
+                            [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>
+                                {{(variant == 1) ? featurePrimary[ip].features[i].name:
+                                featurePrimary[ip].features[i].name}}
+                            </mat-label>
+                            <mat-select placeholder="{{ featurePrimary[ip].features[i].name }}"
+                                [formControlName]="featurePrimary[ip].features[i].slug">
+                                <mat-option>No especificar</mat-option>
+                                <mat-option *ngFor="let item of valano" [value]="item.value">
+                                    {{ item.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field *ngIf="featurePrimary[ip].features[i].type === 'CAPVEH'"
+                            [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                            <mat-label>
+                                {{(variant == 1) ? featurePrimary[ip].features[i].name:
+                                featurePrimary[ip].features[i].name}}
+                            </mat-label>
+                            <mat-select placeholder="{{ featurePrimary[ip].features[i].name }}"
+                                [formControlName]="featurePrimary[ip].features[i].slug">
+                                <mat-option>No especificar</mat-option>
+                                <mat-option *ngFor="let item of capveh" [value]="item.value">
+                                    {{ item.name }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -144,7 +181,8 @@
                         <mat-form-field *ngIf="featurePrimary[ip].features[i].type === 'VAL100'"
                             [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
                             <mat-label>
-                                {{(variant == 1) ? featurePrimary[ip].features[i].name: featurePrimary[ip].features[i].name}}
+                                {{(variant == 1) ? featurePrimary[ip].features[i].name:
+                                featurePrimary[ip].features[i].name}}
                             </mat-label>
                             <mat-select placeholder="{{ featurePrimary[ip].features[i].name }}"
                                 [formControlName]="featurePrimary[ip].features[i].slug">
@@ -159,7 +197,8 @@
                         <mat-form-field *ngIf="featurePrimary[ip].features[i].type === 'VALSTR'"
                             [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
                             <mat-label>
-                                {{(variant == 1) ? featurePrimary[ip].features[i].name: featurePrimary[ip].features[i].name}}
+                                {{(variant == 1) ? featurePrimary[ip].features[i].name:
+                                featurePrimary[ip].features[i].name}}
                             </mat-label>
                             <mat-select placeholder="{{ featurePrimary[ip].features[i].name }}"
                                 [formControlName]="featurePrimary[ip].features[i].slug">
@@ -170,6 +209,32 @@
                             </mat-select>
                         </mat-form-field>
 
+                        <div fxFlex="100" fxFlex.sm="50" class="p-2"
+                            *ngIf="featurePrimary[ip].features[i].type === 'EXPENS'">
+                            <span>Expensas</span>
+                            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+                                <div fxFlex="45">
+                                    <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                                        <mat-label>{{(variant == 1) ? '' : 'Desde'}}</mat-label>
+                                        <input matInput #ex_desde (keyup)="changeExpens(ex_desde.value, ex_hasta.value)"
+                                            autocomplete="off" placeholder="Desde" type="text" onlyNumber>
+                                    </mat-form-field>
+                                </div>
+                                <div fxFlex="10" class="text-center" [class.pt-2]="variant == 2">
+                                    <mat-icon class="text-muted">remove</mat-icon>
+                                </div>
+                                <div fxFlex="45">
+                                    <mat-form-field [appearance]="getAppearance()" [floatLabel]="getFloatLabel()">
+                                        <mat-label>{{(variant == 1) ? '' : 'Hasta'}}</mat-label>
+                                        <input matInput #ex_hasta (keyup)="changeExpens(ex_desde.value, ex_hasta.value)"
+                                            autocomplete="off" placeholder="Hasta" type="text" onlyNumber>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </span>
 
@@ -188,8 +253,12 @@
 
     <div fxLayout="row" fxLayoutAlign="center center" class="p-2">
         <button mat-raised-button color="warn" class="uppercase mx-1" (click)="reset()">Borrar</button>
-        <button *ngIf="!vertical" mat-raised-button color="primary" class="uppercase mx-1"
-            (click)="showMore = !showMore">{{(showMore) ? 'Ocultar' : 'Busqueda Avanzada'}}</button>
+        <!-- <button *ngIf="!vertical" mat-raised-button color="primary" class="uppercase mx-1"
+            (click)="showMore = !showMore">{{(showMore) ? 'Ocultar' : 'Busqueda Avanzada'}}
+        </button> -->
+        <button *ngIf="!vertical" mat-raised-button color="primary" class="uppercase mx-1" (click)="busquedaAvanzada()">
+            Más Filtros
+        </button>
         <button *ngIf="searchOnBtnClick" mat-raised-button color="primary" class="search-btn mx-1" (click)="search()">
             <mat-icon>search</mat-icon> Buscar
         </button>
@@ -197,3 +266,10 @@
 
 
 </form>
+
+<ng-template #loading>
+    <div class="div-content">
+        <div class="loading"><div></div><div></div><div></div></div>
+
+    </div>
+</ng-template>

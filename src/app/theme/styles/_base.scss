@@ -1,5 +1,11 @@
 @import "variables";
 
+.video, iframe{
+    width: 100%;
+    min-height: calc(100vw / 3)
+}
+
+
 /******* Base styles *******/
 *{
     margin: 0;
@@ -313,7 +319,8 @@ main.content-offset-to-top{
         width: $search-sidenav-width; 
         border: 0 !important; 
         box-shadow: none !important;
-        background-color: transparent !important;
+        min-height: 100vh;
+        background-color: #fafafa !important;
         .mat-drawer-inner-container{
             padding: 2px;
             height: 100%;
@@ -761,11 +768,19 @@ button.swipe-arrow{
             width: 320px;
         }
     }
+    .video, iframe{
+        width: 100%;
+        min-height: calc(100vw / 1.6)
+    }
+    
 } 
 
 // sm
 @media screen and (min-width: 600px) and (max-width: 959px) {
-    
+    .video, iframe{
+        width: 100%;
+        min-height: calc(100vw / 1.6)
+    }
 }
 
 @media screen and (max-width: 959px) {

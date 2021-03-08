@@ -1,4 +1,4 @@
-<mat-card *ngIf="property" class="property-item p-0 mat-elevation-z3 " [ngClass]="[viewType + '-item', 'column-'+column]" [class.full-width-page]="fullWidthPage" fxLayout="row wrap">  
+<mat-card *ngIf="property" class="property-item p-0 mat-elevation-z0 " [ngClass]="[viewType + '-item', 'column-'+column]" [class.full-width-page]="fullWidthPage" fxLayout="row wrap">  
   
     <div fxFlex="100" fxShrink="3" [fxFlex.gt-sm]="(viewType=='list') ? 40 : 100" [fxFlex.sm]="(viewType=='list') ? 50 : 100" class="thumbnail-section">
 
@@ -52,9 +52,9 @@
 
                 <div class="features mt-3">
                     <!-- <span class="subtitle">Atributos a destacar</span>  -->
-                    <p *ngFor="let feature of featuresImportants.slice(0,4)">
+                    <p *ngFor="let feature of featuresImportants.slice(0,6)">
                         <!-- <img class="icon" [src]="feature.icon ? feature.icon : defaulIconFeature"> -->
-                        <mat-icon color="accent" class="icon material-icons-outlined material-icons-round">check_circle</mat-icon>
+                        <mat-icon svgIcon="iconCheck" class="icon"></mat-icon>
                         <span>{{ feature.name }}  <strong>{{ feature.pivot.value }}</strong></span>
                     </p>
                 </div> 

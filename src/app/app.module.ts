@@ -7,7 +7,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgProgressModule } from 'ngx-progressbar';
 import { NgProgressHttpModule } from 'ngx-progressbar/http';
 import { AgmCoreModule } from '@agm/core';
-import { EmbedVideo } from 'ngx-embed-video'; 
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 import { CustomPaginator } from "src/app/theme/components/paginator-configuration/custom-paginator";
 
@@ -23,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { AppSettings } from './app.settings';
 import { AppInterceptor } from './theme/utils/app-interceptor';
+import { EmbedVideo } from 'ngx-embed-video';
 
 
 import { PagesComponent } from './pages/pages.component';
@@ -68,12 +68,12 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
       apiKey: environment.API_KEY_GM,
       libraries: ["places"]
     }),
-    EmbedVideo.forRoot(),
     NgProgressModule,
     NgProgressHttpModule, 
     InputFileModule.forRoot(config),
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    EmbedVideo.forRoot()
   ],
   providers: [
     AppSettings,

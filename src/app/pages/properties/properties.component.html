@@ -1,12 +1,12 @@
-<app-header-image [backgroundImage]="'assets/images/carousel/slide-3.jpg'" [bgImageAnimate]="true"
+<!-- <app-header-image [backgroundImage]="'assets/images/carousel/slide-3.jpg'" [bgImageAnimate]="true"
     [contentOffsetToTop]="false" [desc]="'Encontrar una propiedad nunca fue tan fácil'" [contentMinHeight]="200">
-</app-header-image>
+</app-header-image> -->
 
 <div class="px-3">
 
     <div class="theme-container">
 
-        <mat-sidenav-container class="all-properties mt-3">
+        <mat-sidenav-container class="all-properties">
             <mat-sidenav #sidenav [autoFocus]="false" [opened]="sidenavOpen" [mode]="sidenavOpen ? 'side' : 'over'"
                 class="search-sidenav">
                 <mat-card [perfectScrollbar]="psConfig" class="mat-elevation-z0 transparent">
@@ -22,11 +22,12 @@
 
             <mat-sidenav-content ngClass.gt-sm="distance">
 
-                <div fxLayout="row wrap" class="properties-wrapper mt-0" 
-                    infiniteScroll 
-                    [infiniteScrollDistance]="2" 
-                    [infiniteScrollThrottle]="50"                    
-                    (scrolled)="onScroll()">
+                <div fxLayout="row wrap" 
+                    class="properties-wrapper mt-0 animate__animated animate__fadeIn" 
+                    infiniteScroll [infiniteScrollDistance]="2"
+                    [infiniteScrollThrottle]="50"
+                    (scrolled)="onScroll()" 
+                    *ngIf="properties | async as properties; else loading">
 
                     <div fxFlex="100" class="px-2 pb-2 pt-0">
                         <app-properties-toolbar [showSidenavToggle]="!sidenavOpen" (onSidenavToggle)="sidenav.toggle()"
@@ -46,14 +47,13 @@
                         </app-properties-search-results-filters> -->
                     </div>
 
-                    
 
-                        <div *ngFor="let property of properties | async" [fxFlex]="(viewType=='grid') ? viewCol : 100"
-                            class="item">
-                            <app-property-item [publication]="property" [viewType]="viewType" [viewColChanged]="viewCol"
-                                [fullWidthPage]="false"></app-property-item>
-                        </div>
-                    
+
+                    <div *ngFor="let property of properties" [fxFlex]="(viewType=='grid') ? viewCol : 100" class="item">
+                        <app-property-item [publication]="property" [viewType]="viewType" [viewColChanged]="viewCol"
+                            [fullWidthPage]="false"></app-property-item>
+                    </div>
+
 
                     <!-- 
             <div *ngIf="properties?.length == 0" fxFlex="100" fxLayoutAlign="center center" [style.min-height.px]="200">                
@@ -90,3 +90,14 @@
 <!-- <app-clients></app-clients> -->
 
 <app-get-in-touch></app-get-in-touch>
+
+<ng-template #loading>
+    <div class="div-content">
+        <div class="loading">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+    </div>
+</ng-template>

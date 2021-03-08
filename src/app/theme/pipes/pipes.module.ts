@@ -6,6 +6,7 @@ import { FilterNeighborhoodsPipe } from './filter-neighborhoods';
 import { FilterStreetsPipe } from './filter-streets.pipe';
 import { FilterCityPipe } from './filter-city.pipe';
 import { FilterMunicipalityPipe } from './filter-municipality.pipe';
+import { SanitizerPipe } from './sanitizer.pipe';
 
 @NgModule({
     imports: [ 
@@ -17,6 +18,7 @@ import { FilterMunicipalityPipe } from './filter-municipality.pipe';
         FilterStreetsPipe,
         FilterCityPipe,
         FilterMunicipalityPipe,
+        SanitizerPipe,
         
     ],
     exports: [
@@ -24,7 +26,8 @@ import { FilterMunicipalityPipe } from './filter-municipality.pipe';
         FilterNeighborhoodsPipe,
         FilterStreetsPipe,
         FilterCityPipe,
-        FilterMunicipalityPipe
+        FilterMunicipalityPipe,
+        SanitizerPipe
     ]
 })
 export class PipesModule { }

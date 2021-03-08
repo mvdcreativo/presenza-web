@@ -1,20 +1,21 @@
-import { Component, OnInit, ViewChild, HostListener, ViewChildren, QueryList, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener,Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { Property, Publication } from 'src/app/app.models';
-import { SwiperConfigInterface, SwiperDirective } from 'ngx-swiper-wrapper';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AppSettings, Settings } from 'src/app/app.settings';
 import { CompareOverviewComponent } from 'src/app/shared/compare-overview/compare-overview.component';
-import { EmbedVideoService } from 'ngx-embed-video';
-import { emailValidator } from 'src/app/theme/utils/app-validators';
-import { Meta } from '@angular/platform-browser';
+import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpRequest } from '@angular/common/http';
-import { map, take, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { MatIconRegistry } from '@angular/material/icon';
+
+import { EmbedVideoService } from 'ngx-embed-video';
+
+
+///icono check
+const iconCheck = `
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512.00533 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g transform="matrix(0.6699999999999999,0,0,0.6699999999999999,84.48080566406247,102.44107421875015)"><path xmlns="http://www.w3.org/2000/svg" d="m306.582031 317.25c-12.074219 12.097656-28.160156 18.753906-45.25 18.753906-17.085937 0-33.171875-6.65625-45.246093-18.753906l-90.667969-90.664062c-12.09375-12.078126-18.75-28.160157-18.75-45.25 0-17.089844 6.65625-33.171876 18.75-45.246094 12.074219-12.097656 28.160156-18.753906 45.25-18.753906 17.085937 0 33.171875 6.65625 45.246093 18.753906l45.417969 45.394531 125.378907-125.375c-40.960938-34.921875-93.996094-56.10546875-152.042969-56.10546875-129.601563 0-234.667969 105.06640575-234.667969 234.66406275 0 129.601562 105.066406 234.667969 234.667969 234.667969 129.597656 0 234.664062-105.066407 234.664062-234.667969 0-24.253907-3.6875-47.636719-10.515625-69.652344zm0 0" fill="#96dfb9" data-original="#4caf50" style="" class=""/><path xmlns="http://www.w3.org/2000/svg" d="m261.332031 293.335938c-5.460937 0-10.921875-2.089844-15.082031-6.25l-90.664062-90.667969c-8.34375-8.339844-8.34375-21.824219 0-30.164063 8.339843-8.34375 21.820312-8.34375 30.164062 0l75.582031 75.582032 214.253907-214.25c8.339843-8.339844 21.820312-8.339844 30.164062 0 8.339844 8.34375 8.339844 21.824218 0 30.167968l-229.335938 229.332032c-4.15625 4.160156-9.621093 6.25-15.082031 6.25zm0 0" fill="#00ad7f" data-original="#2196f3" style="" class=""/></g></svg>`;
 
 @Component({
   selector: 'app-property',
@@ -23,9 +24,7 @@ import { of } from 'rxjs';
 })
 export class PropertyComponent implements OnInit {
   @ViewChild('sidenav') sidenav: any;
-  public psConfig: PerfectScrollbarConfigInterface = {
-    wheelPropagation: true
-  };
+
   public storageAPI = environment.storageAPI;
   public defaulIconFeature = `${this.storageAPI}images/icons/tick.svg`
   public sidenavOpen: boolean = true;
@@ -33,23 +32,39 @@ export class PropertyComponent implements OnInit {
   private sub: any;
   public property: Property;
   public settings: Settings;
-  public embedVideo: any;
   public relatedProperties: Publication[];
   public featuredProperties: Publication[];
   public mortgageForm: FormGroup;
   public monthlyPayment: any;
-  public contactForm: FormGroup;
   publication: Publication;
   propertyFeatures: any[];
+//////
+  params = {
+    autoplay: 1,
+    muted: 1,
+    controls: 0,
+    allow:"autoplay; fullscreen; picture-in-picture"
+  };
+  iframe_html: any;
 
-  constructor(public appSettings: AppSettings,
+  onMessage(event: CustomEvent<any>) {
+    const message = event.detail;
+    // ...
+  }
+/////
+  constructor(
+    public appSettings: AppSettings,
     public appService: AppService,
     private activatedRoute: ActivatedRoute,
-    private embedService: EmbedVideoService,
     public fb: FormBuilder,
     private meta: Meta,
-    private http: HttpClient,
-    @Inject(DOCUMENT) private document) {
+    @Inject(DOCUMENT) private document,
+    public iconRegistry: MatIconRegistry, 
+    public sanitizer: DomSanitizer,
+    private embedService: EmbedVideoService
+    ) 
+  {
+    iconRegistry.addSvgIconLiteral('iconCheck', sanitizer.bypassSecurityTrustHtml(iconCheck));
     this.settings = this.appSettings.settings;
     this.meta.addTags([
       { name: 'twitter:card', content: 'summary_large_image' },
@@ -84,12 +99,7 @@ export class PropertyComponent implements OnInit {
       interestRate: ['', Validators.required],
       period: ['', Validators.required]
     });
-    this.contactForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.compose([Validators.required, emailValidator])],
-      phone: ['', Validators.required],
-      message: ['', Validators.required]
-    });
+
   }
 
   ngOnDestroy() {
@@ -118,7 +128,7 @@ export class PropertyComponent implements OnInit {
 
       this.property = data.property;
       this.publication = data;
-
+      this.property ? this.embedVideo() : false
 
       ////Mapeamos y fomateamos las Features      
       this.propertyFeatures = this.property.features.map(
@@ -135,8 +145,6 @@ export class PropertyComponent implements OnInit {
       //////////
 
 
-
-      this.embedVideo = this.embedService.embed("https://www.360cities.net/video/home");
       setTimeout(() => {
         // this.config.observer = true;
         // this.config2.observer = true;
@@ -160,6 +168,11 @@ export class PropertyComponent implements OnInit {
   }
 
 
+  int(value){
+    // console.log(parseFloat(value));
+    
+    return parseFloat(value)
+  }
       
   public getStatusBgColor(status){
     switch (status) {
@@ -181,7 +194,24 @@ export class PropertyComponent implements OnInit {
   }
   
 
-
+ embedVideo(){
+  this.iframe_html = this.embedService.embed(this.property?.videos[0].url, {
+    query: { 
+      portrait: 0, 
+      // color: '333',
+      autopause:0,
+      badge:0
+    },
+    attr: { 
+       
+      // height: 200 , 
+      allow:"autoplay; fullscreen; picture-in-picture",
+      frameborder:"0",
+      allowfullscreen:"true"
+    }
+  });
+ }
+//  <iframe src="https://player.vimeo.com/video/520589318?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="1332" height="720" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Configuraci&amp;oacute;n 2020-05-02 11-00-24.mp4"></iframe>
 
   public addToCompare() {
     this.appService.addToCompare(this.publication, CompareOverviewComponent, (this.settings.rtl) ? 'rtl' : 'ltr');
@@ -209,12 +239,6 @@ export class PropertyComponent implements OnInit {
     this.appService.getFeaturedProperties().subscribe((publications: any) => {
       this.featuredProperties = publications.slice(0, 3);
     })
-  }
-
-  public onContactFormSubmit(values: Object) {
-    if (this.contactForm.valid) {
-      console.log(values);
-    }
   }
 
   public onMortgageFormSubmit(values: Object) {

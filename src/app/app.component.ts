@@ -16,7 +16,9 @@ export class AppComponent {
     public router:Router,
     @Inject(PLATFORM_ID) private platformId: Object
     ){
+
     this.settings = this.appSettings.settings;
+
   }
 
   ngAfterViewInit(){ 

@@ -1,24 +1,6 @@
  
-.widget{ 
-    margin-bottom: 40px;
-    .widget-title{
-        margin: 0 -16px 16px;
-        padding: 8px 16px;
-        text-transform: uppercase;
-        font-weight: 500;
-    }
-    &:first-child{  
-        .widget-title{
-            margin: -16px -16px 16px;
-            padding: 8px 16px;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-    } 
-
-} 
 .galery-content{
-    min-height: 80vh!important;
+    // min-height: 80vh!important;
     background-attachment: #ccc;
 }
 .wsp-ico{
@@ -56,4 +38,8 @@
     justify-content: center;
     color: white;
     width: 100%;
+}
+.contact{
+    position: sticky;
+    top:64px;
 }

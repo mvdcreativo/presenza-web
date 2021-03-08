@@ -56,7 +56,7 @@ export interface Property {
     created_at?: string;
     updated_at?: string;
     deleted_at?: string;
-    videos?: any[];
+    videos?: Video[];
     features?: Feature[];
     property_type: PropertyTypes;
     neighborhood: Neighborhood
@@ -97,6 +97,14 @@ export interface Image {
     url: string;
     url_small: string;
     url_medium: string;
+    title?: string;
+    subtitle?: string;
+    description?: string;
+
+}
+export interface Video {
+    id?: number;
+    url: string;
     title?: string;
     subtitle?: string;
     description?: string;
@@ -263,12 +271,6 @@ export class Plan {
                 public rooms: number,
                 public baths: number,
                 public image: string){ }
-}
-
-export class Video {
-    constructor(public id: number, 
-                public name: string,
-                public link: string){ }
 }
 
 export class Pagination {
