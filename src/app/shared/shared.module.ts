@@ -69,9 +69,7 @@ import { OurAgentsComponent } from './our-agents/our-agents.component';
 import { MissionComponent } from './mission/mission.component';
 import { OurServicesComponent } from './our-services/our-services.component';
 import { LogoComponent } from './logo/logo.component';
-import { StickyDirectiveModule } from 'ngx-sticky-directive';
 
-import { VimeModule } from '@vime/angular';
 
 @NgModule({
   imports: [
@@ -117,7 +115,7 @@ import { VimeModule } from '@vime/angular';
     PipesModule,
     DirectivesModule,
     InfiniteScrollModule,
-    VimeModule
+    
   ],
   exports: [
     RouterModule,
@@ -180,8 +178,7 @@ import { VimeModule } from '@vime/angular';
     MissionComponent, 
     OurServicesComponent,
     InfiniteScrollModule,
-    StickyDirectiveModule,
-    VimeModule
+    
   ],
   declarations: [ 
     LogoComponent,
