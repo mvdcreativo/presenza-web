@@ -37,7 +37,7 @@
     "ngx-perfect-scrollbar": "9.0.0",
     "ngx-progressbar": "6.0.3",
     "ngx-swiper-wrapper": "^8.0.2",
-    "rxjs": "6.5.5",
+    "rxjs": "6.6.6",
     "ts-loader": "7.0.5",
     "tslib": "^2.0.0",
     "zone.js": "0.10.3"
