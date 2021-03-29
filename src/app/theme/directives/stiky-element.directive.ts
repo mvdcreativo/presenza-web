@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Renderer2, Inject, PLATFORM_ID } from '@angular/core';
-import { WindowScrollService } from '../utils/window-scroll.service';
 import { isPlatformBrowser } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { WindowScrollService } from '../utils/window-scroll.service';
 
 enum StickyState {
   fixed = "fixed",

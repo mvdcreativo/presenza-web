@@ -81,8 +81,9 @@
  
                     <div fxFlex="100" fxFlex.gt-sm="30" ngClass.lt-md="pt-5"> 
                         <h2 class="uppercase mb-3">Ubicación</h2>
-                        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeControl]="false" [styles]="mapStyles">
+                        <agm-map [latitude]="latMapa" [longitude]="lngMapa" [zoom]="zoom" [mapTypeControl]="false" [styles]="mapStyles">
                             <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="false"></agm-marker>
+                            <agm-marker [latitude]="lat2" [longitude]="lng2" [markerDraggable]="false"></agm-marker>
                         </agm-map>
                     </div>
                 </div> 

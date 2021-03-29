@@ -31,11 +31,10 @@
     }
 }
 
-.sticky-element{
-    position: fixed!important;
-    top: 127px!important;
-    z-index: 1000;
-    width: 350px;
+.sticky{
+    position: sticky!important;
+    top:64px!important;
+
 }
 
 //////////////

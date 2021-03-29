@@ -7,7 +7,9 @@ import { tap, filter, map, share } from 'rxjs/operators';
 
 const DEBOUNCE_MAX_COUNT = 12;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class WindowScrollService {
 
   public scroll$:Observable<number>;
