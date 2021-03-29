@@ -68,15 +68,15 @@ export class PropertyComponent implements OnInit {
     this.settings = this.appSettings.settings;
     this.meta.addTags([
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:site', content: '@themeseason' },
-      { name: 'twitter:title', content: 'Property Name' },
-      { name: 'twitter:description', content: 'Property description' },
-      { name: 'twitter:image', content: 'https://fakeimg.pl/600x400/' },
-      { name: 'og:title', content: 'Property Name' },
-      { name: 'og:description', content: 'Property description' },
-      { name: 'og:image', content: 'https://fakeimg.pl/600x400/' },
-      { name: 'og:url', content: 'http://themeseason.com' },
-      { name: 'og:site_name', content: 'HouseKey' },
+      // { name: 'twitter:site', content: '@themeseason' },
+      { name: 'twitter:title', content: this.property?.title },
+      { name: 'twitter:description', content: this.property?.description },
+      { name: 'twitter:image', content: this.property?.images[0].url_medium },
+      { name: 'og:title', content: this.property?.title },
+      { name: 'og:description', content: this.property?.description },
+      { name: 'og:image', content: this.property?.images[0].url_medium },
+      { name: 'og:url', content: 'https://www.presenzaprop.com.ar/propiedades/'+ this.publication?.id},
+      { name: 'og:site_name', content: 'Inmobiliaria Presenza' },
       { name: 'og:type', content: 'website' }
     ]);
   }
