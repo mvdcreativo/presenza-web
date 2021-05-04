@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "housekey": {
+    "presenza": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -84,18 +84,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "housekey:build"
+            "browserTarget": "presenza:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "housekey:build:production"
+              "browserTarget": "presenza:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "housekey:build"
+            "browserTarget": "presenza:build"
           }
         },
         "test": {
@@ -132,11 +132,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "housekey:serve"
+            "devServerTarget": "presenza:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "housekey:serve:production"
+              "devServerTarget": "presenza:serve:production"
             }
           }
         },
@@ -163,21 +163,21 @@
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
-            "browserTarget": "housekey:build",
-            "serverTarget": "housekey:server"
+            "browserTarget": "presenza:build",
+            "serverTarget": "presenza:server"
           },
           "configurations": {
             "production": {
-              "browserTarget": "housekey:build:production",
-              "serverTarget": "housekey:server:production"
+              "browserTarget": "presenza:build:production",
+              "serverTarget": "presenza:server:production"
             }
           }
         },
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "browserTarget": "housekey:build:production",
-            "serverTarget": "housekey:server:production",
+            "browserTarget": "presenza:build:production",
+            "serverTarget": "presenza:server:production",
             "routes": [
               "/"
             ]
@@ -189,7 +189,7 @@
       }
     }
   },
-  "defaultProject": "housekey",
+  "defaultProject": "presenza",
   "cli": {
     "analytics": false
   }

@@ -1,6 +1,6 @@
 {
-  "name": "housekey",
-  "version": "3.3.0",
+  "name": "presenza",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,10 +8,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "dev:ssr": "ng run housekey:serve-ssr",
+    "dev:ssr": "ng run presenza:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
-    "build:ssr": "ng build --prod && ng run housekey:server:production",
-    "prerender": "ng run housekey:prerender"
+    "build:ssr": "ng build --prod && ng run presenza:server:production",
+    "prerender": "ng run presenza:prerender"
   },
   "private": true,
   "dependencies": {
