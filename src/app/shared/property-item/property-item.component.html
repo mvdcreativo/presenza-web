@@ -7,9 +7,12 @@
         </div>
        
         <div *ngIf="property?.images?.length == 1" class="mat-card-image w-100 m-0">
-            <img [src]="property.images[0]">
+            <a [routerLink]="['/propiedades', publication.id]">
+                <img [src]="property.images[0]">
+            </a>
         </div>
         <div *ngIf="property?.images?.length > 1" class="mat-card-image w-100 m-0">
+            <a [routerLink]="['/propiedades', publication.id]">
             <div class="swiper-container" [swiper]="config">
                 <div class="swiper-wrapper">
                     <div *ngFor="let image of property.images" class="swiper-slide">
@@ -21,6 +24,7 @@
                 <button mat-icon-button class="swiper-button-prev swipe-arrow"><mat-icon class="mat-icon-lg">keyboard_arrow_left</mat-icon></button>
                 <button mat-icon-button class="swiper-button-next swipe-arrow"><mat-icon class="mat-icon-lg">keyboard_arrow_right</mat-icon></button>
             </div>
+            </a>
         </div>
 
         <div class="control-icons">

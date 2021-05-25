@@ -9,8 +9,9 @@
     </div>
     <div id="main-carousel" class="swiper-container" [swiper]="config" (indexChange)="onIndexChange($event)">
         <div class="swiper-wrapper">
-            <div *ngFor="let image of images" class="swiper-slide">
-                <img [attr.data-src]="image.url" class="swiper-lazy">
+            <div *ngFor="let image of images" class="swiper-slide" >
+                <div class="bg-img"  [style.background-image]="'url('+image.url+')'"></div>
+                <img [attr.data-src]="image.url" class="swiper-lazy" >
                 <div class="swiper-lazy-preloader"></div>
             </div>
         </div>
