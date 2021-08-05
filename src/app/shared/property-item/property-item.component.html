@@ -5,10 +5,12 @@
         <div fxLayout="row wrap" class="property-status">
             <span *ngFor="let transaction_type of publication.transaction_types" [style.background-color]="getStatusBgColor(transaction_type.id)">{{transaction_type.name}}</span>
         </div>
-       
+        <div class="publication-status" *ngIf="publication.status?.id === 5 || publication.status?.id === 6 ">
+            <span>{{publication.status?.name}}</span>
+        </div>
         <div *ngIf="property?.images?.length == 1" class="mat-card-image w-100 m-0">
             <a [routerLink]="['/propiedades', publication.id]">
-                <img [src]="property.images[0]">
+                <img loading="lazy" [src]="property.images[0]">
             </a>
         </div>
         <div *ngIf="property?.images?.length > 1" class="mat-card-image w-100 m-0">

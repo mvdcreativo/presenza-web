@@ -9,6 +9,11 @@ export interface Publication {
     currency?: any;
     created_at?: string;
     updated_at?:string;
+    status?: Status;
+    
+}
+
+export interface Status {
     
 }
 
