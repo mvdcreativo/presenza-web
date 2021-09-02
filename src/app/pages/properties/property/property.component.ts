@@ -83,10 +83,9 @@ export class PropertyComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.activatedRoute.params.subscribe(params => {
-      this.getPropertyById(params['id']);
+      this.getPropertyBySlug(params['slug']);
+      
     });
-    this.getRelatedProperties();
-    this.getFeaturedProperties();
     if (window.innerWidth < 960) {
       this.sidenavOpen = false;
       if (this.sidenav) {
@@ -122,10 +121,10 @@ export class PropertyComponent implements OnInit {
     (window.innerWidth < 960) ? this.sidenavOpen = false : this.sidenavOpen = true;
   }
 
-  public getPropertyById(id) {
-    this.appService.getPropertyById(id).subscribe((data: any) => {
-      console.log(data);
-
+  public getPropertyBySlug(slug) {
+    this.appService.getPropertyBySlug(slug).subscribe((data: any) => {
+      this.getRelatedProperties();
+      this.getFeaturedProperties();
       this.property = data.property;
       this.publication = data;
       this.property ? this.embedVideo() : false
@@ -195,22 +194,26 @@ export class PropertyComponent implements OnInit {
   
 
  embedVideo(){
-  this.iframe_html = this.embedService.embed(this.property?.videos[0].url, {
-    query: { 
-      portrait: 0, 
-      // color: '333',
-      autopause:0,
-      badge:0
-    },
-    attr: { 
-       
-      // height: 200 , 
-      allow:"autoplay; fullscreen; picture-in-picture",
-      frameborder:"0",
-      allowfullscreen:"true"
+   if(this.property?.videos[0]?.url)
+   {
+     this.iframe_html = this.embedService.embed(this.property?.videos[0]?.url, {
+       query: { 
+         portrait: 0, 
+         // color: '333',
+         autopause:0,
+         badge:0
+       },
+       attr: { 
+          
+         // height: 200 , 
+         allow:"autoplay; fullscreen; picture-in-picture",
+         frameborder:"0",
+         allowfullscreen:"true"
+       }
+     });
     }
-  });
- }
+
+   }
 //  <iframe src="https://player.vimeo.com/video/520589318?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="1332" height="720" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Configuraci&amp;oacute;n 2020-05-02 11-00-24.mp4"></iframe>
 
   public addToCompare() {
@@ -231,7 +234,8 @@ export class PropertyComponent implements OnInit {
 
   public getRelatedProperties() {
     this.appService.getRelatedProperties().subscribe((publications: any) => {
-      this.relatedProperties = publications;
+       
+      this.relatedProperties = publications.filter(v => v.id != this.publication.id);
     })
   }
 

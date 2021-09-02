@@ -72,10 +72,7 @@ export class AppService {
           const resp = res.data.data
           return resp;
       }));
-      
-      
-      
-    
+         
   }
 
  ///listar
@@ -130,6 +127,10 @@ export class AppService {
 
   public getPropertyById(id): Observable<Publication> {
     return this.http.get<Response>(`${this.url}publications/${id}`).pipe(map(v=> v.data));
+  }
+
+  public getPropertyBySlug(slug): Observable<Publication> {
+    return this.http.get<Response>(`${this.url}publication_by_slug/${slug}`).pipe(map(v=> v.data));
   }
 
   public getFeaturedProperties(): Observable<Publication[]> {

@@ -48,7 +48,7 @@ export class PropertyItemComponent implements OnInit {
 
   ngOnInit() {
     if(this.publication){
-      console.log(this.publication);
+      // console.log(this.publication);
       
       this.property = this.publication?.property;
       this.filterFeatureImportant()

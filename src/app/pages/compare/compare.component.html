@@ -32,7 +32,7 @@
                   <mat-icon color="warn" class="mat-icon-lg">highlight_off</mat-icon>
                 </button>              
                 <mat-card-content>
-                    <h2 class="title"><a [routerLink]="['/propiedades', publication.id]">{{publication.property.title}}</a></h2>
+                    <h2 class="title"><a [routerLink]="['/propiedades', publication.property.slug]">{{publication.property.title}}</a></h2>
                     <p fxLayout="row" fxLayoutAlign="center center" class="address">
                         <mat-icon class="text-muted">location_on</mat-icon>
                         <span>{{publication.property.address}}</span>
@@ -73,7 +73,7 @@
                           <h3>{{ fp.name }}</h3>
                           <div class="feature-item" *ngFor="let f of fp.features">
                               <!-- <img class="icon" [src]="f.icon ? f.icon : defaulIconFeature"> -->
-                              <mat-icon color="accent" class="icon material-icons-outlined material-icons-round">check_circle</mat-icon>
+                              <mat-icon svgIcon="iconCheck" class="icon"></mat-icon>
                               <span class="mx-2">{{f.name}}</span>
                               <span class="mx-2"><strong>{{f.pivot.value}}</strong></span>
                           </div>
@@ -113,7 +113,7 @@
                     <p>{{publication.property.description}}</p>                     
                 </mat-card-content> 
                 <mat-card-actions class="text-center">  
-                    <a [routerLink]="['/propiedades', publication.id]" mat-raised-button color="primary" class="uppercase mb-3">Más Info</a>                     
+                    <a [routerLink]="['/propiedades', publication.property.slug]" mat-raised-button color="primary" class="uppercase mb-3">Más Info</a>                     
                 </mat-card-actions>             
             </mat-card> 
 

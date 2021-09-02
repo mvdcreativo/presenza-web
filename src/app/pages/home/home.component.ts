@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   public message:string;
   public featuredProperties: Observable<Publication[]>;
 
-  hotOfferToday_id = 3;
+  hotOfferToday_id;
   public features: Feature[];
 
   totalResut: number;
@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
   lastPage: number;
 
   public settings: Settings;
+  
   
   constructor(public appSettings:AppSettings, public appService:AppService, public mediaObserver: MediaObserver) {
     this.settings = this.appSettings.settings;
@@ -87,7 +88,13 @@ export class HomeComponent implements OnInit {
   
 
   loadData() {
-    this.properties = this.result.pipe(map(v => v.data.data))
+    this.properties = this.result.pipe(map(v => {
+      
+      this.hotOfferToday_id = Math.max.apply(Math, v.data.data.map(function(v) { return v.id; })) > 0
+        ? Math.max.apply(Math, v.data.data.map(function(v) { return v.id; }))
+        : false
+      return v.data.data
+    }))
 
     
     this.subscriptions.push(

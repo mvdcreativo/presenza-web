@@ -5,16 +5,16 @@
         <div fxLayout="row wrap" class="property-status">
             <span *ngFor="let transaction_type of publication.transaction_types" [style.background-color]="getStatusBgColor(transaction_type.id)">{{transaction_type.name}}</span>
         </div>
-        <div class="publication-status" *ngIf="publication.status?.id === 5 || publication.status?.id === 6 ">
+        <div class="publication-status" *ngIf="publication.status?.id === 5 || publication.status?.id === 6 || publication.status?.id === 7 ">
             <span>{{publication.status?.name}}</span>
         </div>
         <div *ngIf="property?.images?.length == 1" class="mat-card-image w-100 m-0">
-            <a [routerLink]="['/propiedades', publication.id]">
+            <a [routerLink]="['/propiedades', publication.property.slug]">
                 <img loading="lazy" [src]="property.images[0]">
             </a>
         </div>
         <div *ngIf="property?.images?.length > 1" class="mat-card-image w-100 m-0">
-            <a [routerLink]="['/propiedades', publication.id]">
+            <a [routerLink]="['/propiedades', publication.property.slug]">
             <div class="swiper-container" [swiper]="config">
                 <div class="swiper-wrapper">
                     <div *ngFor="let image of property.images" class="swiper-slide">
@@ -45,7 +45,7 @@
         <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">
             <mat-card-content class="mb-0">
               
-                <h1 class="title"><a [routerLink]="['/propiedades', publication.id]">{{property.title}}</a></h1>
+                <h1 class="title"><a [routerLink]="['/propiedades', publication.property.slug]">{{property.title}}</a></h1>
 
                 <p fxLayout="row" class="address">
                     <mat-icon class="text-muted">location_on</mat-icon>
@@ -83,7 +83,7 @@
                     <span class="mx-2">{{property.updated_at | date:"dd-MM-yyyy" }}</span>
                 </p>
                 <div>
-                    <a [routerLink]="['/propiedades', publication.id]" mat-stroked-button color="primary" class="uppercase">Más Info</a>
+                    <a [routerLink]="['/propiedades', publication.property.slug]" mat-stroked-button color="primary" class="uppercase">Más Info</a>
                 </div> 
             </mat-card-actions> 
         </div>        
