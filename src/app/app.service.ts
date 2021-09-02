@@ -61,6 +61,7 @@ export class AppService {
       params: new HttpParams()
         .set('page', '1')
         .set('status_id', status)
+        .set('active', "1")
         .set('filter', '')
         .set('features_parameter', null)
         .set('sort', 'desc')
@@ -82,6 +83,7 @@ export class AppService {
   return this.http.get<ResponsePaginate>(`${environment.API}publications`, {
     params: new HttpParams()
       .set('page', currentPage.toString())
+      .set('active', "1")
       .set('filter', filter)
       .set('features_parameter', JSON.stringify(features_parameter))
       .set('sort', sort)
@@ -103,6 +105,7 @@ export class AppService {
     return this.http.get<ResponsePaginate>(`${environment.API}publications`, {
       params: new HttpParams()
         .set('page', currentPage.toString())
+        .set('active', "1")
         .set('filter', filter)
         .set('features_parameter', JSON.stringify(features_parameter))
         .set('sort', sort)
