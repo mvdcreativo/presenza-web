@@ -138,7 +138,11 @@ export class AppService {
   }
 
   public getRelatedProperties(): Observable<Publication[]> {
-    return this.http.get<Response>(`${this.url}publications`).pipe(map(v=> v.data.data));
+
+    return this.http.get<Response>(`${this.url}publications`, {
+      params: new HttpParams()
+        .set('active', "1")  
+      }).pipe(map(v=> v.data.data));
   }
 
   public getPropertiesByAgentId(agentId): Observable<Publication[]> {
