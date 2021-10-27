@@ -4,12 +4,14 @@ import { Routes, RouterModule, PreloadAllModules  } from '@angular/router';
 import { PagesComponent } from './pages/pages.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { LockScreenComponent } from './pages/lock-screen/lock-screen.component';
+import { BtnWspRedirectComponent } from './shared/btn-wsp-redirect/btn-wsp-redirect.component';
 
 export const routes: Routes = [
     { 
         path: '', 
         component: PagesComponent, 
         children: [
+            
             //{ path: '', redirectTo: '/landing', pathMatch: 'full' },
             { path: '', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
             { path: 'quienes-somos', loadChildren: () => import('./pages/about/about.module').then(m => m.AboutModule) },
@@ -28,6 +30,7 @@ export const routes: Routes = [
     },
     { path: 'landing', loadChildren: () => import('./pages/landing/landing.module').then(m => m.LandingModule) },
     { path: 'lock-screen', component: LockScreenComponent },
+    { path: 'whatsapp', component: BtnWspRedirectComponent},
     { path: '**', component: NotFoundComponent }
 ]; 
 

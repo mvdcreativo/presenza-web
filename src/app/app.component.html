@@ -1,13 +1,14 @@
 <div id="app" class="app" [dir]="(settings.rtl) ? 'rtl' : 'ltr'"
-            [ngClass]="[settings.theme, 'toolbar-'+settings.toolbar]" 
-            [class.main-toolbar-fixed]="settings.mainToolbarFixed"> 
-            
-    <router-outlet></router-outlet>
-    <ng-progress 
-        [spinner]="false"
-        [meteor]="false" 
-        color="#e91e63">
+        [ngClass]="[settings.theme, 'toolbar-'+settings.toolbar]"
+        [class.main-toolbar-fixed]="settings.mainToolbarFixed">
+
+        <router-outlet></router-outlet>
+        <ng-progress [spinner]="false" [meteor]="false" color="#e91e63">
         </ng-progress>
+        
+        <a *ngIf="!scroll" [routerLink]="[ '/whatsapp']" target="_blank" mat-button
+                class="wsp-btn mat-elevation-z5 animate__animated animate__rubberBand">
+                <span>Contactanos</span>
+                <mat-icon svgIcon="ico-wsp" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+        </a>
 </div>
-
-

@@ -274,6 +274,7 @@ export class FooterComponent implements OnInit {
   ];
   public feedbackForm: FormGroup;
   public subscribeForm: FormGroup;
+    year: number;
   constructor(public formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -284,6 +285,9 @@ export class FooterComponent implements OnInit {
     this.subscribeForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, emailValidator])]
     })
+
+    const d = new Date();
+    this.year = d.getFullYear();
   }
 
   public onFeedbackFormSubmit(values:Object):void {
