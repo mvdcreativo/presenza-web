@@ -69,6 +69,7 @@ import { OurAgentsComponent } from './our-agents/our-agents.component';
 import { MissionComponent } from './mission/mission.component';
 import { OurServicesComponent } from './our-services/our-services.component';
 import { LogoComponent } from './logo/logo.component';
+import { BtnWspRedirectComponent } from './btn-wsp-redirect/btn-wsp-redirect.component';
 
 
 @NgModule({
@@ -118,6 +119,7 @@ import { LogoComponent } from './logo/logo.component';
     
   ],
   exports: [
+    BtnWspRedirectComponent,
     RouterModule,
     ReactiveFormsModule,
     SwiperModule,
@@ -181,6 +183,7 @@ import { LogoComponent } from './logo/logo.component';
     
   ],
   declarations: [ 
+    BtnWspRedirectComponent,
     LogoComponent,
     HeaderImageComponent,
     HeaderCarouselComponent,

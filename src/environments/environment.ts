@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API:"http://presenza_api_v1.test/api/",
-  storageAPI:"http://presenza_api_v1.test/storage/",
+  API:"https://api.presenzaprop.com.ar/api/",
+  storageAPI:"https://api.presenzaprop.com.ar/storage/",
   API_KEY_GM : "AIzaSyBgkTr7pr2hwsa4Gkk499GLfcm01j0CsvQ",
   urlAssets : "assets/"
   // API:"http://api.presenza.picaworks.com/api/",
