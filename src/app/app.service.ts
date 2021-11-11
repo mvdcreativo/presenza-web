@@ -129,8 +129,9 @@ export class AppService {
     return this.http.get<Response>(`${this.url}publications/${id}`).pipe(map(v=> v.data));
   }
 
-  public getPropertyBySlug(slug): Observable<Publication> {
-    return this.http.get<Response>(`${this.url}publication_by_slug/${slug}`).pipe(map(v=> v.data));
+  public getPropertyBySlug(id,slug): Observable<Publication> {
+
+    return this.http.get<Response>(`${this.url}publication_by_slug/${id}/${slug}`).pipe(map(v=> v.data));
   }
 
   public getFeaturedProperties(): Observable<Publication[]> {

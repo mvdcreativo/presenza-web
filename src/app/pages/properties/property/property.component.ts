@@ -75,7 +75,7 @@ export class PropertyComponent implements OnInit {
       { name: 'og:title', content: this.property?.title },
       { name: 'og:description', content: this.property?.description },
       { name: 'og:image', content: this.property?.images[0].url_medium },
-      { name: 'og:url', content: 'https://www.presenzaprop.com.ar/propiedades/'+ this.publication?.id},
+      { name: 'og:url', content: 'https://www.presenzaprop.com.ar/propiedades/'+ this.publication?.property_id+'/'+this.publication.property.slug},
       { name: 'og:site_name', content: 'Inmobiliaria Presenza' },
       { name: 'og:type', content: 'website' }
     ]);
@@ -83,7 +83,7 @@ export class PropertyComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.activatedRoute.params.subscribe(params => {
-      this.getPropertyBySlug(params['slug']);
+      this.getPropertyBySlug(params['id'], params['slug']);
       
     });
     if (window.innerWidth < 960) {
@@ -121,8 +121,8 @@ export class PropertyComponent implements OnInit {
     (window.innerWidth < 960) ? this.sidenavOpen = false : this.sidenavOpen = true;
   }
 
-  public getPropertyBySlug(slug) {
-    this.appService.getPropertyBySlug(slug).subscribe((data: any) => {
+  public getPropertyBySlug(id, slug) {
+    this.appService.getPropertyBySlug(id, slug).subscribe((data: any) => {
       this.getRelatedProperties();
       this.getFeaturedProperties();
       this.property = data.property;

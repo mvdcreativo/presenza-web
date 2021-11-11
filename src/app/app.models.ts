@@ -64,7 +64,8 @@ export interface Property {
     videos?: Video[];
     features?: Feature[];
     property_type: PropertyTypes;
-    neighborhood: Neighborhood
+    neighborhood: Neighborhood;
+    slug?:string;
     //ORIGINAL DEL THEMPLATE
     // id: number;
     // title: string; 

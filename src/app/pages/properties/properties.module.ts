@@ -16,7 +16,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
 export const routes = [
   { path: '', component: PropertiesComponent, pathMatch: 'full' },
-  { path: ':slug', component: PropertyComponent }
+  { path: ':id/:slug', component: PropertyComponent }
 ];
 
 @NgModule({
