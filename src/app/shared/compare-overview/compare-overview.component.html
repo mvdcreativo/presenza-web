@@ -10,7 +10,7 @@
   </div>
 </mat-toolbar>
 <mat-nav-list>
-  <a mat-list-item *ngFor="let publication of publications" [routerLink]="['/propiedades', {id: publication.property.id,  slug:publication.property.slug}]" (click)="hideSheet(true)">
+  <a mat-list-item *ngFor="let publication of publications" [routerLink]="['/propiedades/' + publication.property.id + '/' + publication.property.slug ]" (click)="hideSheet(true)">
     <h3 mat-line class="fw-500">{{publication.property.title}}</h3>
     <i mat-line><mat-icon class="mat-icon-sm text-muted">location_on</mat-icon><small>{{publication.property.address}}</small></i>
     <span *ngFor="let priceTransaction of publication?.transaction_types">

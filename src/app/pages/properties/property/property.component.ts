@@ -75,7 +75,7 @@ export class PropertyComponent implements OnInit {
       { name: 'og:title', content: this.property?.title },
       { name: 'og:description', content: this.property?.description },
       { name: 'og:image', content: this.property?.images[0].url_medium },
-      { name: 'og:url', content: 'https://www.presenzaprop.com.ar/propiedades/'+ this.publication?.property_id+'/'+this.publication.property.slug},
+      { name: 'og:url', content: 'https://www.presenzaprop.com.ar/propiedades/'+ this.publication?.property_id+'/'+this.publication?.property?.slug},
       { name: 'og:site_name', content: 'Inmobiliaria Presenza' },
       { name: 'og:type', content: 'website' }
     ]);

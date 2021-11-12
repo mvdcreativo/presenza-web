@@ -8,6 +8,7 @@ import { CompareOverviewComponent } from '../compare-overview/compare-overview.c
 import { environment } from 'src/environments/environment';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 ///icono check
 const iconCheck = `
@@ -40,7 +41,8 @@ export class PropertyItemComponent implements OnInit {
     public appSettings:AppSettings, 
     public appService:AppService,
     public iconRegistry: MatIconRegistry, 
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private router: Router,
     ) {
     this.settings = this.appSettings.settings;
     iconRegistry.addSvgIconLiteral('iconCheck', sanitizer.bypassSecurityTrustHtml(iconCheck));
@@ -141,7 +143,10 @@ export class PropertyItemComponent implements OnInit {
     }
   }
   
-
+  link(id,slug){
+    // this.router.navigate([`/propiedades/${publication.property.id}/${publication.property.slug}`])
+    
+  }
   public addToCompare(){
     this.appService.addToCompare(this.publication, CompareOverviewComponent, (this.settings.rtl) ? 'rtl':'ltr'); 
   }
